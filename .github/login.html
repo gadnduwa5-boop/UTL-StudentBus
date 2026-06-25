@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - StudentBus GPS</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f4f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.box{
+    background:white;
+    padding:25px;
+    width:350px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#1565c0;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+
+#msg{
+    margin-top:10px;
+    text-align:center;
+    font-weight:bold;
+}
+
+</style>
+</head>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1565c0">
+<body>
+
+<div style="text-align: center;margin-bottom: 20xp;"><img src="image/logo-studentbus.png" width="140"></div>
+
+<div class="box">
+<h2>Connexion</h2>
+
+<input type="text" id="cardId" placeholder="Numéro de carte">
+<input type="password" id="password" placeholder="Mot de passe">
+
+<button onclick="loginUser()">Se connecter</button>
+<p>
+    pas de compte ?
+    <a herf="register.html">s'inscrire</a> 
+</p>
+<p id="msg"></p>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="js/firebase-config.js"></script>
+
+<script>
+
+async function loginUser(){
+
+    const cardId = document.getElementById("cardId").value.trim();
+    const password = document.getElementById("password").value;
+
+    const email = cardId + "@utlstudentbus.app";
+
+    try {
+
+        const userCredential = await firebase.auth()
+            .signInWithEmailAndPassword(email, password);
+
+        // 🔥 récupérer profil Firestore
+        const doc = await db.collection("users").doc(cardId).get();
+
+        if(!doc.exists){
+            alert("Utilisateur introuvable");
+            return;
+        }
+
+        const user = doc.data();
+
+        localStorage.setItem("cardId", cardId);
+        localStorage.setItem("role", user.role);
+
+        // 🔥 REDIRECTION AUTOMATIQUE
+        if(user.role === "student"){
+            window.location.href = "student/dashboard.html";
+        }
+
+        else if(user.role === "chauffeur"){
+            window.location.href = "driver/dashboard.html";
+        }
+
+        else if(user.role === "admin"){
+            window.location.href = "admin/dashboard.html";
+        }
+
+        else {
+            alert("Rôle inconnu");
+        }
+
+    }
+
+    catch(error){
+        alert(error.message);
+    }
+}
+
+</script>
+
+</body>
+</html>

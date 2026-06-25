@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTL StudentBus</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1565c0">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#1565c0,#0d47a1);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+    flex-direction:column;
+}
+
+/* Logo */
+.logo{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+/* Titre */
+h1{
+    font-size:26px;
+    margin-bottom:5px;
+}
+
+p{
+    opacity:0.9;
+    font-size:14px;
+}
+
+/* Bouton */
+button{
+    margin-top:20px;
+    padding:12px 22px;
+    border:none;
+    border-radius:8px;
+    background:white;
+    color:#1565c0;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
+}
+
+/* Loading */
+.loader{
+    margin-top:20px;
+    border:4px solid #ffffff40;
+    border-top:4px solid white;
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    animation:spin 1s linear infinite;
+    display:none;
+}
+
+@keyframes spin{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<div style="text-align: center;">
+    <img src="image/logo-studentbus.png" alt="UTL student
+    Bus" width="180">
+</div>
+
+<h1>UTL StudentBus</h1>
+<p>Système intelligent de transport scolaire</p>
+
+<button onclick="startApp()">Commencer</button>
+
+<div class="loader" id="loader"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="js/firebase-config.js"></script>
+
+<script>
+
+/* =========================
+   PWA SERVICE WORKER
+========================= */
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+}
+
+/* =========================
+   START APP
+========================= */
+function startApp(){
+
+    document.getElementById("loader").style.display = "block";
+
+    setTimeout(checkUser, 1500);
+}
+
+/* =========================
+   CHECK USER ROLE
+========================= */
+function checkUser(){
+
+    const user = firebase.auth().currentUser;
+
+    if(!user){
+        window.location.href = "login.html";
+        return;
+    }
+
+    db.collection("users")
+    .doc(user.uid)
+    .get()
+    .then(doc => {
+
+        if(!doc.exists){
+            window.location.href = "login.html";
+            return;
+        }
+
+        const data = doc.data();
+
+        const role = data.role;
+
+        // 🔐 REDIRECTION SELON ROLE
+        if(role === "admin"){
+            window.location.href = "admin/dashboard.html";
+        }
+        else if(role === "driver"){
+            window.location.href = "driver/dashboard.html";
+        }
+        else if(role === "student"){
+            window.location.href = "student/dashboard.html";
+        }
+        else{
+            window.location.href = "login.html";
+        }
+
+    })
+    .catch(err => {
+        console.error(err);
+        window.location.href = "login.html";
+    });
+
+}
+
+</script>
+
+</body>
+</html>
