@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes Étudiants</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+.header{
+    background:#1565c0;
+    color:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#1565c0;
+    color:white;
+}
+
+.badge{
+    padding:5px 10px;
+    border-radius:20px;
+    color:white;
+    font-size:12px;
+}
+
+.approved{
+    background:#28a745;
+}
+
+.pending{
+    background:#ffc107;
+    color:black;
+}
+
+.rejected{
+    background:#dc3545;
+}
+
+.btn{
+    background:#1565c0;
+    color:white;
+    padding:10px 15px;
+    text-decoration:none;
+    border-radius:8px;
+}
+</style>
+</head>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1565c0">
+<body>
+
+<div class="header">
+    <h1>🎓 Étudiants de mon Bus</h1>
+</div>
+
+<div class="card">
+    <p><strong>Bus :</strong> <span id="busId">...</span></p>
+    <p><strong>Total étudiants :</strong> <span id="totalStudents">0</span></p>
+</div>
+
+<div class="card">
+    <input
+        type="text"
+        id="search"
+        placeholder="Rechercher un étudiant..."
+        onkeyup="searchStudents()">
+</div>
+
+<div class="card">
+
+<table>
+<thead>
+<tr>
+<th>Card ID</th>
+<th>Nom</th>
+<th>Email</th>
+<th>Statut</th>
+</tr>
+</thead>
+
+<tbody id="studentsTable"></tbody>
+
+</table>
+
+</div>
+
+<a href="dashboard.html" class="btn">
+← Retour Dashboard
+</a>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script>
+
+if(localStorage.getItem("role") !== "chauffeur"){
+    window.location.href="../login.html";
+}
+
+let students = [];
+let driverBusId = "";
+
+/* ================= DRIVER ================= */
+
+async function loadDriver(){
+
+    const cardId = localStorage.getItem("cardId");
+
+    if(!cardId){
+        alert("Chauffeur introuvable");
+        return;
+    }
+
+    const driverDoc = await db
+    .collection("users")
+    .doc(cardId)
+    .get();
+
+    if(!driverDoc.exists){
+        alert("Chauffeur introuvable");
+        return;
+    }
+
+    const driver = driverDoc.data();
+
+    driverBusId = driver.busId || "";
+
+    document.getElementById("busId").textContent =
+        driverBusId || "Aucun";
+
+    loadStudents();
+}
+
+/* ================= STUDENTS ================= */
+
+async function loadStudents(){
+
+    const table =
+    document.getElementById("studentsTable");
+
+    table.innerHTML = "";
+
+    students = [];
+
+    const snapshot =
+    await db.collection("users").get();
+
+    snapshot.forEach(doc => {
+
+        const user = doc.data();
+
+        if(
+            user.role === "student" &&
+            user.busId === driverBusId
+        ){
+            students.push(user);
+        }
+    });
+
+    document.getElementById("totalStudents")
+    .textContent = students.length;
+
+    renderStudents(students);
+}
+
+/* ================= RENDER ================= */
+
+function renderStudents(list){
+
+    const table =
+    document.getElementById("studentsTable");
+
+    table.innerHTML = "";
+
+    if(list.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="4">
+                Aucun étudiant trouvé
+            </td>
+        </tr>
+        `;
+
+        return;
+    }
+
+    list.forEach(student => {
+
+        let badgeClass = "pending";
+
+        if(student.status === "approved"){
+            badgeClass = "approved";
+        }
+
+        if(student.status === "rejected"){
+            badgeClass = "rejected";
+        }
+
+        table.innerHTML += `
+        <tr>
+
+            <td>${student.cardId || "-"}</td>
+
+            <td>${student.fullname || "-"}</td>
+
+            <td>${student.email || "-"}</td>
+
+            <td>
+                <span class="badge ${badgeClass}">
+                    ${student.status || "pending"}
+                </span>
+            </td>
+
+        </tr>
+        `;
+    });
+}
+
+/* ================= SEARCH ================= */
+
+function searchStudents(){
+
+    const value =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+    const filtered =
+    students.filter(student =>
+
+        (student.cardId || "")
+        .toLowerCase()
+        .includes(value)
+
+        ||
+
+        (student.fullname || "")
+        .toLowerCase()
+        .includes(value)
+
+    );
+
+    renderStudents(filtered);
+}
+
+/* ================= INIT ================= */
+
+loadDriver();
+
+</script>
+
+</body>
+</html>

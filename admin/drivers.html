@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Chauffeurs</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#f4f6f9;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+}
+
+button{
+    padding:10px;
+    border:none;
+    background:#1565c0;
+    color:white;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    background:white;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+th{
+    background:#1565c0;
+    color:white;
+}
+</style>
+</head>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1565c0">
+<body>
+
+<h2>🚍 Gestion des Chauffeurs</h2>
+
+<div class="card">
+
+<input id="cardId" placeholder="DRV001">
+<input id="fullname" placeholder="Nom complet">
+<input id="phone" placeholder="Téléphone">
+<input id="busId" placeholder="BUS-01">
+<input id="password" placeholder="Mot de passe">
+
+<button onclick="addDriver()">Ajouter Chauffeur</button>
+
+</div>
+
+<div class="card">
+<input id="search" onkeyup="search()" placeholder="Rechercher...">
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Numéro de carte</th>
+<th>Nom</th>
+<th>Téléphone</th>
+<th>Bus</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="list"></tbody>
+</table>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script>
+
+let allDrivers = [];
+
+// 🚀 AJOUT CHAUFFEUR
+async function addDriver(){
+
+    const cardId = document.getElementById("cardId").value.trim();
+    const fullname = document.getElementById("fullname").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const busId = document.getElementById("busId").value.trim();
+    const password = document.getElementById("password").value;
+
+    if(!cardId || !fullname || !phone || !busId || !password){
+        alert("Remplis tous les champs");
+        return;
+    }
+
+    try {
+
+        const email = cardId + "@utlstudentbus.app";
+
+        // 🔥 1. créer auth user
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+        // 🔥 2. enregistrer Firestore
+        await db.collection("users").doc(cardId).set({
+            cardId: cardId,
+            fullname: fullname,
+            phone: phone,
+            busId: busId,
+            role: "chauffeur",
+            status: "approved"
+        });
+
+        alert("Chauffeur créé avec succès");
+
+        loadDrivers();
+
+    } catch(e){
+        console.error(e);
+        alert(e.message);
+    }
+}
+
+// 🚍 LISTE CHAUFFEURS
+async function loadDrivers(){
+
+    const snap = await db.collection("users")
+        .where("role","==","chauffeur")
+        .get();
+
+    allDrivers = [];
+
+    snap.forEach(doc=>{
+        allDrivers.push(doc.data());
+    });
+
+    render(allDrivers);
+}
+
+// 📋 AFFICHAGE
+function render(data){
+
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    data.forEach(d=>{
+
+        list.innerHTML += `
+        <tr>
+            <td>${d.cardId}</td>
+            <td>${d.fullname}</td>
+            <td>${d.phone}</td>
+            <td>${d.busId}</td>
+            <td>
+                <button onclick="deleteDriver('${d.cardId}')">
+                    Supprimer
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+}
+
+// ❌ SUPPRIMER
+async function deleteDriver(id){
+
+    if(!confirm("Supprimer ce chauffeur ?")) return;
+
+    await db.collection("users").doc(id).delete();
+
+    loadDrivers();
+}
+
+// 🔍 RECHERCHE
+function search(){
+
+    const v = document.getElementById("search").value.toLowerCase();
+
+    const f = allDrivers.filter(d =>
+        d.cardId.toLowerCase().includes(v) ||
+        d.fullname.toLowerCase().includes(v)
+    );
+
+    render(f);
+}
+
+// INIT
+loadDrivers();
+
+</script>
+
+</body>
+</html>

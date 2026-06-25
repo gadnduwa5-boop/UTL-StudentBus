@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestion des Étudiants</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+h1{
+    color:#1565c0;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+th{
+    background:#1565c0;
+    color:white;
+}
+
+button{
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+    margin:2px;
+}
+
+.approve{
+    background:#28a745;
+}
+
+.reject{
+    background:#ffc107;
+    color:black;
+}
+
+.delete{
+    background:#dc3545;
+}
+</style>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1565c0">
+
+</head>
+<body>
+
+<h1>🎓 Gestion des Étudiants</h1>
+
+<div class="card">
+
+<table>
+
+<thead>
+<tr>
+<th>Card ID</th>
+<th>Nom</th>
+<th>Bus</th>
+<th>Statut</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="studentsTable">
+
+<tr>
+<td colspan="5">Chargement...</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script>
+
+// Vérification admin
+if(localStorage.getItem("role") !== "admin"){
+    window.location.href="../login.html";
+}
+
+// Charger étudiants
+async function loadStudents(){
+
+    try{
+
+        const tbody =
+        document.getElementById("studentsTable");
+
+        tbody.innerHTML = "";
+
+        const snapshot = await db
+        .collection("users")
+        .where("role","==","student")
+        .get();
+
+        console.log("STUDENTS =", snapshot.size);
+
+        if(snapshot.empty){
+
+            tbody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Aucun étudiant trouvé
+                </td>
+            </tr>
+            `;
+
+            return;
+        }
+
+        snapshot.forEach(doc=>{
+
+            const student = doc.data();
+
+            tbody.innerHTML += `
+            <tr>
+
+                <td>${student.cardId || doc.id}</td>
+
+                <td>${student.fullname || "-"}</td>
+
+                <td>${student.busId || "-"}</td>
+
+                <td>${student.status || "pending"}</td>
+
+                <td>
+
+                    <button
+                    class="approve"
+                    onclick="approveStudent('${doc.id}')">
+                    Approuver
+                    </button>
+
+                    <button
+                    class="reject"
+                    onclick="rejectStudent('${doc.id}')">
+                    Refuser
+                    </button>
+
+                    <button
+                    class="delete"
+                    onclick="deleteStudent('${doc.id}')">
+                    Supprimer
+                    </button>
+
+                </td>
+
+            </tr>
+            `;
+        });
+
+    }catch(error){
+
+        console.error(error);
+        alert(error.message);
+
+    }
+}
+
+// Approuver
+async function approveStudent(id){
+
+    try{
+
+        await db.collection("users")
+        .doc(id)
+        .update({
+            status:"approved"
+        });
+
+        loadStudents();
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+}
+
+// Refuser
+async function rejectStudent(id){
+
+    try{
+
+        await db.collection("users")
+        .doc(id)
+        .update({
+            status:"rejected"
+        });
+
+        loadStudents();
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+}
+
+// Supprimer
+async function deleteStudent(id){
+
+    const ok =
+    confirm("Supprimer cet étudiant ?");
+
+    if(!ok) return;
+
+    try{
+
+        await db.collection("users")
+        .doc(id)
+        .delete();
+
+        loadStudents();
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+}
+
+// Initialisation
+loadStudents();
+
+</script>
+
+</body>
+</html>

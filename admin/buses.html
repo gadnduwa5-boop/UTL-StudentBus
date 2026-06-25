@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestion des Bus</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+h1{
+    color:#1565c0;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.btn-primary{
+    background:#1565c0;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc3545;
+    color:white;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th,td{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+th{
+    background:#1565c0;
+    color:white;
+}
+</style>
+</head>
+<body>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1565c0">
+<h1>🚍 Gestion des Bus</h1>
+
+<div class="card">
+
+<h3>Ajouter un bus</h3>
+
+<input type="text" id="busId" placeholder="BUS-01">
+
+<input type="text" id="busName" placeholder="Nom du bus">
+
+<input type="number" id="capacity" placeholder="Capacité">
+
+<select id="driverId">
+    <option value="">Sélectionner un chauffeur</option>
+</select>
+
+<select id="status">
+    <option value="active">Actif</option>
+    <option value="inactive">Inactif</option>
+</select>
+
+<button class="btn-primary" onclick="addBus()">
+Ajouter Bus
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Liste des Bus</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Nom</th>
+<th>Capacité</th>
+<th>Chauffeur</th>
+<th>Statut</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="busTable"></tbody>
+
+</table>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script>
+
+// Vérification admin
+if(localStorage.getItem("role") !== "admin"){
+    window.location.href = "../login.html";
+}
+
+// Charger les chauffeurs
+async function loadDrivers(){
+
+    try{
+
+        const select = document.getElementById("driverId");
+
+        select.innerHTML =
+        '<option value="">Sélectionner un chauffeur</option>';
+
+        const snapshot = await db
+        .collection("users")
+        .where("role","==","chauffeur")
+        .get();
+
+        snapshot.forEach(doc => {
+
+            const driver = doc.data();
+
+            select.innerHTML += `
+                <option value="${doc.id}">
+                    ${driver.fullname || doc.id}
+                </option>
+            `;
+
+        });
+
+    }catch(error){
+
+        console.error("Erreur loadDrivers :", error);
+        alert(error.message);
+
+    }
+}
+
+// Ajouter un bus
+async function addBus(){
+
+    try{
+
+        const busId =
+        document.getElementById("busId").value.trim();
+
+        const name =
+        document.getElementById("busName").value.trim();
+
+        const capacity =
+        Number(document.getElementById("capacity").value);
+
+        const driverId =
+        document.getElementById("driverId").value;
+
+        const status =
+        document.getElementById("status").value;
+
+        if(!busId){
+            alert("ID du bus obligatoire");
+            return;
+        }
+
+        if(!name){
+            alert("Nom du bus obligatoire");
+            return;
+        }
+
+        if(capacity <= 0){
+            alert("Capacité invalide");
+            return;
+        }
+
+        const existingBus = await db
+        .collection("buses")
+        .doc(busId)
+        .get();
+
+        if(existingBus.exists){
+            alert("Ce bus existe déjà");
+            return;
+        }
+
+        await db.collection("buses")
+        .doc(busId)
+        .set({
+
+            busId: busId,
+            name: name,
+            capacity: capacity,
+            driverId: driverId || "",
+            status: status,
+            createdAt: firebase.firestore.Timestamp.now()
+
+        });
+
+        alert("✅ Bus ajouté avec succès");
+
+        document.getElementById("busId").value = "";
+        document.getElementById("busName").value = "";
+        document.getElementById("capacity").value = "";
+        document.getElementById("driverId").value = "";
+        document.getElementById("status").value = "active";
+
+        loadBuses();
+
+    }catch(error){
+
+        console.error("Erreur addBus :", error);
+        alert(error.message);
+
+    }
+}
+
+// Charger les bus
+async function loadBuses(){
+
+    try{
+
+        const tbody =
+        document.getElementById("busTable");
+
+        tbody.innerHTML = "";
+
+        const snapshot =
+        await db.collection("buses").get();
+
+        if(snapshot.empty){
+
+            tbody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Aucun bus enregistré
+                </td>
+            </tr>
+            `;
+
+            return;
+        }
+
+        snapshot.forEach(doc => {
+
+            const bus = doc.data();
+
+            tbody.innerHTML += `
+            <tr>
+
+                <td>${bus.busId || "-"}</td>
+
+                <td>${bus.name || "-"}</td>
+
+                <td>${bus.capacity || "-"}</td>
+
+                <td>${bus.driverId || "-"}</td>
+
+                <td>${bus.status || "-"}</td>
+
+                <td>
+
+                    <button
+                    class="btn-danger"
+                    onclick="deleteBus('${doc.id}')">
+
+                    Supprimer
+
+                    </button>
+
+                </td>
+
+            </tr>
+            `;
+
+        });
+
+    }catch(error){
+
+        console.error("Erreur loadBuses :", error);
+        alert(error.message);
+
+    }
+}
+
+// Supprimer un bus
+async function deleteBus(busId){
+
+    const confirmation =
+    confirm("Supprimer ce bus ?");
+
+    if(!confirmation) return;
+
+    try{
+
+        await db.collection("buses")
+        .doc(busId)
+        .delete();
+
+        alert("Bus supprimé");
+
+        loadBuses();
+
+    }catch(error){
+
+        console.error("Erreur deleteBus :", error);
+        alert(error.message);
+
+    }
+}
+
+// Initialisation
+window.onload = async () => {
+
+    await loadDrivers();
+    await loadBuses();
+
+};
+
+</script>
+
+</body>
+</html>

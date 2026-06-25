@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Chauffeur</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+.header{
+    background:#1565c0;
+    color:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+.card h3{
+    color:#1565c0;
+    margin-bottom:10px;
+}
+
+.logout{
+    background:#dc3545;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1565c0">
+<body>
+<div class="header">
+    <img src="../image/logo-studentbus.png"
+    width="40"
+    height="40"
+    class="header-logo">
+    <span>UTL StudentBus</span>
+</div>
+<div class="header">
+    <h1>🚍 Dashboard Chauffeur</h1>
+</div>
+
+<div class="card">
+    <h3>Informations Chauffeur</h3>
+
+    <p><strong>Nom :</strong> <span id="fullname">...</span></p>
+
+    <p><strong>Card ID :</strong> <span id="cardId">...</span></p>
+
+    <p><strong>Statut :</strong> <span id="status">...</span></p>
+</div>
+
+<div class="card">
+    <h3>Bus Assigné</h3>
+
+    <p><strong>ID Bus :</strong> <span id="busId">...</span></p>
+
+    <p><strong>Nom Bus :</strong> <span id="busName">...</span></p>
+
+    <p><strong>Capacité :</strong> <span id="capacity">...</span></p>
+
+    <p><strong>Statut :</strong> <span id="busStatus">...</span></p>
+</div>
+
+<button class="logout" onclick="logout()">
+Déconnexion
+</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script>
+
+if(localStorage.getItem("role") !== "chauffeur"){
+    window.location.href="../login.html";
+}
+
+async function loadDriver(){
+
+    const cardId = localStorage.getItem("cardId");
+
+    if(!cardId){
+        alert("Chauffeur introuvable");
+        return;
+    }
+
+    try{
+
+        const driverDoc = await db
+        .collection("users")
+        .doc(cardId)
+        .get();
+
+        if(!driverDoc.exists){
+            alert("Chauffeur introuvable");
+            return;
+        }
+
+        const driver = driverDoc.data();
+
+        document.getElementById("fullname").textContent =
+            driver.fullname || "-";
+
+        document.getElementById("cardId").textContent =
+            driver.cardId || "-";
+
+        document.getElementById("status").textContent =
+            driver.status || "-";
+
+        const busId = driver.busId;
+
+        document.getElementById("busId").textContent =
+            busId || "Aucun";
+
+        if(busId){
+
+            const busDoc = await db
+            .collection("buses")
+            .doc(busId)
+            .get();
+
+            if(busDoc.exists){
+
+                const bus = busDoc.data();
+
+                document.getElementById("busName").textContent =
+                    bus.name || "-";
+
+                document.getElementById("capacity").textContent =
+                    bus.capacity || "-";
+
+                document.getElementById("busStatus").textContent =
+                    bus.status || "-";
+            }
+        }
+
+    }catch(error){
+
+        console.error(error);
+        alert(error.message);
+
+    }
+}
+
+async function logout(){
+
+    await firebase.auth().signOut();
+
+    localStorage.clear();
+
+    window.location.href="../login.html";
+}
+
+loadDriver();
+setInterval(() => {
+
+    // Simulation mouvement
+    const lat = -10.7144 + (Math.random() * 0.01);
+    const lng = 25.4667 + (Math.random() * 0.01);
+
+    db.collection("bus_locations")
+    .doc("BUS-01")
+    .set({
+        busId: "BUS-01",
+        lat: lat,
+        lng: lng,
+        updatedAt: Date.now()
+    });
+
+}, 5000);
+</script>
+
+</body>
+</html>

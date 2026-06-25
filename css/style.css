@@ -1,0 +1,148 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+.logo-container img{
+    width: 180px;
+    max-width: 80%;
+}
+/* =========================
+   BODY
+========================= */
+body{
+    background:#f4f6f9;
+}
+
+/* =========================
+   HEADER
+========================= */
+.header{
+    background:#1565c0;
+    color:white;
+    padding:14px;
+    text-align:center;
+    font-weight:bold;
+    font-size:16px;
+}
+.header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.header-logo{
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+}
+/* =========================
+   MAP
+========================= */
+#map{
+    height:100vh;
+    width:100%;
+}
+
+/* =========================
+   CARDS (admin pages)
+========================= */
+.card{
+    background:white;
+    padding:15px;
+    margin:10px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   INPUTS
+========================= */
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.btn-primary{
+    background:#1565c0;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc3545;
+    color:white;
+}
+
+/* =========================
+   TABLES
+========================= */
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th, td{
+    padding:10px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+th{
+    background:#1565c0;
+    color:white;
+}
+
+/* =========================
+   ETA BOX (GPS)
+========================= */
+#etaBox{
+    position:fixed;
+    bottom:15px;
+    left:10px;
+    right:10px;
+    background:white;
+    padding:12px;
+    border-radius:12px;
+    font-size:14px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width:768px){
+
+    .header{
+        font-size:14px;
+        padding:10px;
+    }
+
+    #etaBox{
+        font-size:13px;
+        padding:10px;
+    }
+
+    button{
+        width:100%;
+    }
+
+    table{
+        font-size:12px;
+    }
+}
