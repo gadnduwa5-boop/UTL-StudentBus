@@ -94,18 +94,21 @@ button:hover{
 
 <div class="container">
 
-<h1>🚍UTL StudentBus GPS</h1>
+<h1>inscription des etudiants</h1>
 
 <form id="registerForm">
 
 <label>Numéro de carte</label>
-<input type="text" id="cardId" required>
+<input type="text" id="cardId" maxlength="9" placeholder="25xxxxxxx" required>
 
 <label>Nom complet</label>
 <input type="text" id="fullname" required>
 
 <label>Téléphone</label>
 <input type="tel" id="phone" required>
+
+<label for="email">Email :</label>
+<input type="email" id="email" name="email" placeholder="ex: test@gmail.com" required>
 
 <label>Faculté</label>
 <input type="text" id="faculty" required>
@@ -157,85 +160,54 @@ Déjà inscrit ?
 
 <script>
 
-document.getElementById("registerForm")
-.addEventListener("submit", async function(e){
+const cardIdInput = document.getElementById("cardId");
+const cardMessage = document.getElementById("cardMessage");
 
-    e.preventDefault();
+cardIdInput.addEventListener("input", function () {
 
-    const message = document.getElementById("message");
+    this.value = this.value.replace(/[^0-9]/g, '');
 
-    const cardId = document.getElementById("cardId").value.trim();
-    const fullname = document.getElementById("fullname").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const faculty = document.getElementById("faculty").value.trim();
-    const department = document.getElementById("department").value.trim();
-    const promotion = document.getElementById("promotion").value.trim();
-    const academicYear = document.getElementById("academicYear").value.trim();
-    const busId = document.getElementById("busId").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+    const value = this.value;
+    const regex = /^25[0-9]{7}$/;
 
-    if(password !== confirmPassword){
-        message.innerHTML = "❌ Les mots de passe ne correspondent pas";
+    if (value.length === 0) {
+        cardMessage.textContent = "";
+        cardMessage.className = "";
+    }
+
+    else if (!value.startsWith("25")) {
+        cardMessage.className = "error";
+    }
+
+    else if (value.length < 9) {
+        cardMessage.textContent = '⏳ ${value.length}/9 chiffres saisis';
+        cardMessage.className = "warning";
+    }
+
+    else if (regex.test(value)) {
+        cardMessage.textContent = "✅ Card ID valide";
+        cardMessage.className = "success";
+    }
+
+    else {
+        cardMessage.textContent = "❌ Card ID invalide";
+        cardMessage.className = "error";
+    }
+
+});
+
+document.getElementById("registerForm").addEventListener("submit", function(e){
+
+    const cardId = document.getElementById("cardId").value;
+    const regex = /^25[0-9]{7}$/;
+
+    if(!regex.test(cardId)){
+        e.preventDefault();
+        alert("Le Card ID doit commencer par 25 et contenir exactement 9 chiffres.");
         return;
     }
 
-    try{
-
-        const email = cardId + "@utlstudentbus.app";
-
-        // Création du compte Firebase Auth
-        const userCredential =
-            await firebase.auth()
-            .createUserWithEmailAndPassword(email, password);
-
-        const user = userCredential.user;
-
-        // Enregistrement dans Firestore
-        await db.collection("users")
-        .doc(cardId)
-        .set({
-
-            uid: user.uid,
-
-            cardId: cardId,
-            fullname: fullname,
-            phone: phone,
-
-            faculty: faculty,
-            department: department,
-            promotion: promotion,
-            academicYear: academicYear,
-
-            busId: busId,
-
-            role: "student",
-            status: "pending",
-            busLocked: true,
-
-            createdAt: new Date()
-
-        });
-
-        message.innerHTML =
-        "✅ Inscription réussie. En attente de validation.";
-
-        document.getElementById("registerForm").reset();
-
-        setTimeout(() => {
-            window.location.href = "login.html";
-        }, 2000);
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        message.innerHTML =
-        "❌ " + error.message;
-
-    }
-
+    alert("Inscription réussie !");
 });
 
 </script>
