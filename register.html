@@ -110,14 +110,33 @@ button:hover{
 <label for="email">Email :</label>
 <input type="email" id="email" name="email" placeholder="ex: test@gmail.com" required>
 
-<label>Faculté</label>
-<input type="text" id="faculty" required>
+<label for="faculty">Faculté</label>
+<select id="faculty" id="faculty" required>
+    <option value="">-- choisir une faculté --</option>
+    <option value="appliquées">sciences appliquées</option>
+    <option value="informatique">sciences informatique</option>
+    <option value="agronomie">sciences agrogomiques</option>
+    <option value="gestion">sciences de gestion</option>
+    <option value="droits">droits et environnement</option>
+    <option value="medecine">médecine</option>
+    <option value="petrole">petrole et gaze</option>
+</select>
 
-<label>Département</label>
-<input type="text" id="department" required>
 
-<label>Promotion</label>
-<input type="text" id="promotion" required>
+<label for="departement">Département</label>
+<select id="departement" required>
+    <option value="">--choisir un département--</option>
+ </select>
+
+<label for="promotion">Promotion</label>
+<select id="promotion" required>
+    <option value="">-- Choisir une promotion --</option>
+    <option value="L1">L1</option>
+    <option value="L2">L2</option>
+    <option value="L3">L3</option>
+    <option value="M1">M1</option>
+    <option value="M2">M2</option>
+</select>
 
 <label>Année académique</label>
 <input type="text" id="academicYear" value="2026-2027" required>
@@ -209,7 +228,76 @@ document.getElementById("registerForm").addEventListener("submit", function(e){
 
     alert("Inscription réussie !");
 });
+const departement = {
+    appliquées: [
+        "génie électrique",
+        "électromécanique",
+        "géologie et mines",
+        "electricité",
+    ],
 
+    petrole:[
+        "métalurgie",
+        "biochimie",
+        "chimie industiel",
+    ],
+
+    droits:[
+        "droit public",
+        "droit de l'homme",
+        "droit privé",
+    ],
+
+    agronomie:[
+        "agronomie ",
+    ],
+
+    informatique: [
+        "Génie Logiciel",
+        "Intelligence Artificielle",
+        "Cybersécurité",
+        "Réseaux Informatiques",
+        "système informatique"
+    ],
+
+    gestion: [
+        "Comptabilité",
+        "Finance",
+        "Marketing",
+        "Gestion des Ressources Humaines"
+    ],
+
+    medecine: [
+        "Médecine Générale",
+        "soins infirmiers",
+        "Biologie Médicale",
+        "Santé Publique"
+    ]
+};
+
+const facultySelect = document.getElementById("faculty");
+const departementSelect = document.getElementById("departement");
+
+facultySelect.addEventListener("change", function() {
+
+    const faculty = this.value;
+
+    departementSelect.innerHTML =
+        '<option value="">-- Choisir un département --</option>';
+
+    if (faculty && departement[faculty]) {
+
+        departement[faculty].forEach(departement => {
+
+            const option = document.createElement("option");
+
+            option.value = departement;
+            option.textContent = departement;
+
+            departementSelect.appendChild(option);
+        });
+    }
+});
 </script>
 
 </body>
