@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - StudentBus GPS</title>
+<link rel="shortcut icon" href="image/logo-studentbus.png" type="image/x-icon">
+<title>Login - StudentBus </title>
 
 <style>
 
@@ -94,7 +95,6 @@ async function loginUser(){
         const userCredential = await firebase.auth()
             .signInWithEmailAndPassword(email, password);
 
-        // 🔥 récupérer profil Firestore
         const doc = await db.collection("users").doc(cardId).get();
 
         if(!doc.exists){
@@ -107,7 +107,6 @@ async function loginUser(){
         localStorage.setItem("cardId", cardId);
         localStorage.setItem("role", user.role);
 
-        // 🔥 REDIRECTION AUTOMATIQUE
         if(user.role === "student"){
             window.location.href = "student/dashboard.html";
         }
