@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="image/logo-studentbus.png" type="image/x-icon">
 <title>Gestion des Affectations</title>
 
 <style>
@@ -130,8 +131,6 @@ if(localStorage.getItem("role") !== "admin"){
     window.location.href="../login.html";
 }
 
-/* ================= CHARGEMENT ================= */
-
 async function loadData(){
 
     const usersSnap =
@@ -193,8 +192,6 @@ async function loadData(){
 
 }
 
-/* ================= AFFECTER CHAUFFEUR ================= */
-
 async function assignDriver(){
 
     const driverId =
@@ -236,8 +233,6 @@ async function assignDriver(){
 
     }
 }
-
-/* ================= AFFECTER ÉTUDIANT ================= */
 
 async function assignStudent(){
 
