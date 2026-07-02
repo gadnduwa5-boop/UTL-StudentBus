@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="image/logo-studentbus.png" type="image/x-icon">
 <title>Gestion des Bus</title>
 
 <style>
@@ -137,12 +138,10 @@ Ajouter Bus
 
 <script>
 
-// Vérification admin
 if(localStorage.getItem("role") !== "admin"){
     window.location.href = "../login.html";
 }
 
-// Charger les chauffeurs
 async function loadDrivers(){
 
     try{
@@ -177,7 +176,6 @@ async function loadDrivers(){
     }
 }
 
-// Ajouter un bus
 async function addBus(){
 
     try{
@@ -253,7 +251,6 @@ async function addBus(){
     }
 }
 
-// Charger les bus
 async function loadBuses(){
 
     try{
@@ -321,7 +318,6 @@ async function loadBuses(){
     }
 }
 
-// Supprimer un bus
 async function deleteBus(busId){
 
     const confirmation =
@@ -347,7 +343,6 @@ async function deleteBus(busId){
     }
 }
 
-// Initialisation
 window.onload = async () => {
 
     await loadDrivers();
