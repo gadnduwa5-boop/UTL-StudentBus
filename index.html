@@ -10,13 +10,13 @@
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1565c0">
+<meta name="theme-color" content="#d50012">
 
 <style>
 body{
     margin:0;
     font-family:Arial;
-    background:linear-gradient(135deg,#1565c0,#0d47a1);
+    background:linear-gradient(135deg,#d50012,#0d47a1);
     color:white;
     display:flex;
     justify-content:center;
@@ -83,7 +83,7 @@ button{
 </div>
 
 <h1>UTL StudentBus</h1>
-<p>Système intelligent de transport pour les etudiants de l'université technologique du lualaba</p>
+<p>Système intelligent de transport pour les étudiants de l'université technologique du lualaba</p>
 
 <button onclick="startApp()">Commencer</button>
 
@@ -98,16 +98,10 @@ button{
 
 <script>
 
-/* =========================
-   PWA SERVICE WORKER
-========================= */
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js");
 }
 
-/* =========================
-   START APP
-========================= */
 function startApp(){
 
     document.getElementById("loader").style.display = "block";
@@ -115,9 +109,6 @@ function startApp(){
     setTimeout(checkUser, 1500);
 }
 
-/* =========================
-   CHECK USER ROLE
-========================= */
 function checkUser(){
 
     const user = firebase.auth().currentUser;
