@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="image/logo-studentbus.png" type="image/x-icon">
-<title>Login - StudentBus </title>
+<title>Login - StudentBus</title>
 
 <style>
 
@@ -57,7 +56,10 @@ button:hover{
 <meta name="theme-color" content="#1565c0">
 <body>
 
-<div style="text-align: center;margin-bottom: 20xp;"><img src="image/logo-studentbus.png" width="140"></div>
+<div style="text-align: center;">
+    <img src="image/logo-studentbus.png" alt="UTL student
+    Bus" width="180">
+</div>
 
 <div class="box">
 <h2>Connexion</h2>
@@ -70,7 +72,6 @@ button:hover{
     pas de compte ?
     <a href="register.html">crée un compte</a>
 </p>
-    
 <p id="msg"></p>
 </div>
 
@@ -85,28 +86,38 @@ button:hover{
 
 async function loginUser(){
 
-    const cardId = document.getElementById("cardId").value.trim();
+    const cardId = document.getElementById("cardId").value.trim().toUpperCase();
     const password = document.getElementById("password").value;
 
-    const email = cardId + "@utlstudentbus.app";
+    if(!cardId || !password){
+        alert("Veuillez remplir tous les champs.");
+        return;
+    }
 
-    try {
+    try{
 
-        const userCredential = await firebase.auth()
-            .signInWithEmailAndPassword(email, password);
-
+        // Rechercher l'utilisateur avec son numéro de carte
         const doc = await db.collection("users").doc(cardId).get();
 
         if(!doc.exists){
-            alert("Utilisateur introuvable");
+            alert("Numéro de carte introuvable.");
             return;
         }
 
         const user = doc.data();
 
-        localStorage.setItem("cardId", cardId);
-        localStorage.setItem("role", user.role);
+        // Connexion Firebase avec le vrai e-mail enregistré
+        await firebase.auth().signInWithEmailAndPassword(
+            user.email,
+            password
+        );
 
+        // Sauvegarder les informations
+        localStorage.setItem("cardId", user.cardId);
+        localStorage.setItem("role", user.role);
+        localStorage.setItem("fullname", user.fullname);
+
+        // Redirection selon le rôle
         if(user.role === "student"){
             window.location.href = "student/dashboard.html";
         }
@@ -119,15 +130,32 @@ async function loginUser(){
             window.location.href = "admin/dashboard.html";
         }
 
-        else {
-            alert("Rôle inconnu");
+        else{
+            alert("Rôle inconnu.");
+        }
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        switch(error.code){
+
+            case "auth/wrong-password":
+                alert("Mot de passe incorrect.");
+                break;
+
+            case "auth/user-not-found":
+                alert("Utilisateur introuvable.");
+                break;
+
+            default:
+                alert(error.message);
+
         }
 
     }
 
-    catch(error){
-        alert(error.message);
-    }
 }
 
 </script>
