@@ -3,301 +3,344 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inscription Étudiant - UTL StudentBus GPS</title>
+<title>Inscription Étudiant - UTL StudentBus</title>
 
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Arial, sans-serif;
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    padding:20px;
-}
-
-.container{
-    width:100%;
-    max-width:600px;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-h1{
-    text-align:center;
-    color:#1565c0;
-    margin-bottom:20px;
-}
-
-label{
-    display:block;
-    margin-top:12px;
-    margin-bottom:5px;
-    font-weight:bold;
-}
-
-input, select{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    margin-top:20px;
-    border:none;
-    border-radius:8px;
-    background:#1565c0;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#0d47a1;
-}
-
-.message{
-    text-align:center;
-    margin-top:15px;
-    font-weight:bold;
-}
-
-.link{
-    text-align:center;
-    margin-top:15px;
-}
-
-.link a{
-    text-decoration:none;
-    color:#1565c0;
-}
-
-</style>
+<link rel="stylesheet" href="css/register.css">
 </head>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1565c0">
 
 <body>
 
 <div class="container">
 
-<h1>inscription des etudiants</h1>
+<div style="text-align: center;">
+    <img src="image/logo-studentbus.png" alt="UTL student
+    Bus" width="180">
+</div>
 
-<form id="registerForm">
+<h2>Inscription Étudiant</h2>
 
+<div class="form">
+
+<div class="input-group">
 <label>Numéro de carte</label>
-<input type="text" id="cardId" maxlength="9" placeholder="25xxxxxxx" required>
+<input type="text" id="cardId" placeholder="Ex : STD0001">
+</div>
 
+<div class="input-group">
 <label>Nom complet</label>
-<input type="text" id="fullname" required>
+<input type="text" id="fullname" placeholder="Votre nom complet">
+</div>
 
+<div class="input-group">
+<label>Email</label>
+<input type="email" id="email" placeholder="exemple@gmail.com">
+</div>
+
+<div class="input-group">
 <label>Téléphone</label>
-<input type="tel" id="phone" required>
+<input type="tel" id="phone" placeholder="+243 9XXXXXXXX">
+</div>
 
-<label for="email">Email :</label>
-<input type="email" id="email" name="email" placeholder="ex: test@gmail.com" required>
+<div class="input-group">
+<label>Faculté</label>
+<select id="faculty">
+<option value="">Sélectionner</option>\
+<option value="Polytechnique">Polytechnique</option>
+<option value="Sciences Informatiques">Sciences Informatiques</option>
+<option value="architecture">architecture</option>
+<option value="Droit">sciences juridiques</option>
+<option value="Médecine">Médecine</option>
+<option value="Économie">sciences Économiques</option>
+<option value="Sciences Agronomiques">agronomie et environnement</option>
+<option value="information">science de l'information et de la communication</option>
 
-<label for="faculty">Faculté</label>
-<select id="faculty" id="faculty" required>
-    <option value="">-- choisir une faculté --</option>
-    <option value="appliquées">sciences appliquées</option>
-    <option value="informatique">sciences informatique</option>
-    <option value="agronomie">sciences agrogomiques</option>
-    <option value="gestion">sciences de gestion</option>
-    <option value="droits">droits et environnement</option>
-    <option value="medecine">médecine</option>
-    <option value="petrole">petrole et gaze</option>
 </select>
+</div>
 
-
-<label for="departement">Département</label>
-<select id="departement" required>
-    <option value="">--choisir un département--</option>
- </select>
-
-<label for="promotion">Promotion</label>
-<select id="promotion" required>
-    <option value="">-- Choisir une promotion --</option>
-    <option value="L1">L1</option>
-    <option value="L2">L2</option>
-    <option value="L3">L3</option>
-    <option value="M1">M1</option>
-    <option value="M2">M2</option>
+<div class="input-group">
+<label>Département</label>
+<select id="department">
+<option value="">Sélectionner d'abord une faculté</option>
 </select>
+</div>
 
-<label>Année académique</label>
-<input type="text" id="academicYear" value="2026-2027" required>
-
-<label>Bus souhaité</label>
-<select id="busId" required>
-    <option value="">Choisir un bus</option>
-    <option value="BUS-01">BUS-01</option>
-    <option value="BUS-02">BUS-02</option>
-    <option value="BUS-03">BUS-03</option>
+<div class="input-group">
+<label>Promotion</label>
+<select id="promotion">
+<option value="">Sélectionner</option>
+<option>L1</option>
+<option>L2</option>
+<option>L3</option>
+<option>L4</option>
+<option>L5</option>
+<option>Master 1</option>
+<option>Master 2</option>
 </select>
-
+</div>
+<div class="input-group">
+    <label>Bus</label>
+    <select id="bus">
+        <option value="">Chargement des bus...</option>
+    </select>
+</div>
 <label>Mot de passe</label>
-<input type="password" id="password" required>
+<input type="password" id="password" placeholder="Mot de passe">
+</div>
 
+<div class="input-group">
 <label>Confirmer le mot de passe</label>
-<input type="password" id="confirmPassword" required>
+<input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe">
+</div>
 
-<button type="submit">
-S'inscrire
+<button id="registerBtn">
+Créer mon compte
 </button>
 
-</form>
+<p id="message"></p>
 
-<div class="message" id="message"></div>
-
-<div class="link">
-Déjà inscrit ?
+<p class="login">
+Déjà un compte ?
 <a href="login.html">Se connecter</a>
-</div>
+</p>
 
 </div>
 
-<!-- Firebase -->
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script src="js/firebase-config.js"></script>
-
 <script>
+const message = document.getElementById("message");
+// Charger les bus depuis Firestore
 
-const cardIdInput = document.getElementById("cardId");
-const cardMessage = document.getElementById("cardMessage");
+async function loadBuses() {
 
-cardIdInput.addEventListener("input", function () {
+    const select = document.getElementById("bus");
+    select.innerHTML = '<option value="">Sélectionner un bus</option>';
 
-    this.value = this.value.replace(/[^0-9]/g, '');
+    const snapshot = await db.collection("buses").get();
 
-    const value = this.value;
-    const regex = /^25[0-9]{7}$/;
+    for (const doc of snapshot.docs) {
 
-    if (value.length === 0) {
-        cardMessage.textContent = "";
-        cardMessage.className = "";
+        const bus = doc.data();
+
+        // Nom du chauffeur
+        let chauffeur = "Non affecté";
+
+        if (bus.driverId) {
+            const driverDoc = await db.collection("users")
+                .doc(bus.driverId)
+                .get();
+
+            if (driverDoc.exists) {
+                chauffeur = driverDoc.data().fullname;
+            }
+        }
+
+        // Nombre d'étudiants inscrits
+        const students = await db.collection("users")
+            .where("role", "==", "student")
+            .where("bus", "==", bus.busId)
+            .get();
+
+        const occupied = students.size;
+        const remaining = bus.capacity - occupied;
+
+        // Si le bus est complet
+        if (remaining <= 0) {
+
+            select.innerHTML += `
+                <option disabled>
+                    ${bus.busId} — ${chauffeur} (Complet)
+                </option>
+            `;
+
+        } else {
+
+            select.innerHTML += `
+                <option value="${bus.busId}">
+                    ${bus.busId} — ${chauffeur} (${remaining} places restantes)
+                </option>
+            `;
+
+        }
     }
+}
 
-    else if (!value.startsWith("25")) {
-        cardMessage.className = "error";
-    }
+loadBuses();
 
-    else if (value.length < 9) {
-        cardMessage.textContent = '⏳ ${value.length}/9 chiffres saisis';
-        cardMessage.className = "warning";
-    }
+// Départements par faculté
+const departments = {
+    "Sciences Informatiques": [
+        "Génie Informatique",
+        "Génie Logiciel",
+        "inteligence artificielle",
+    ],
+    "Médecine": [
+        "Médecine Générale",
+        "soins Généraux",
+    ],
+    "Droit": [
+        "Droit Minier et droit de l'environnement",
+        "Droit numérique",
+        "Droit des Affaires et Arbitrage",
+        "Criminologie",
+    ],
+    "Économie": [
+        "Économie de Gestion",
+        "management",
+    ],
+    "Sciences Agronomiques": [
+        "Technique Agricoles",
+        "Sciences Agronomiques",
+        "Gestion des ressources naturelles renouvelables",
+        "Agroéconomique",
+    ],
+    "Polytechnique": [
+        "Chimie industrielle",
+        "Génie Civil",
+        "Électromécanique",
+        "Géologie et mines",
+        "Génie électrique",
+        "Pétrole et Gaz",
+        "Métallurgie",
+    
+    ],
+    "architecture": [
+        "architecture"
+    ],
+    "information": [
+        "journalisme et multi média",
+        "Multimédia et communication digital",
+        "communication des organisations",
+    ],
+};
 
-    else if (regex.test(value)) {
-        cardMessage.textContent = "✅ Card ID valide";
-        cardMessage.className = "success";
-    }
+// Chargement des départements
+document.getElementById("faculty").addEventListener("change", function(){
 
-    else {
-        cardMessage.textContent = "❌ Card ID invalide";
-        cardMessage.className = "error";
+    const faculty = this.value;
+    const department = document.getElementById("department");
+
+    department.innerHTML = "<option value=''>Sélectionner</option>";
+
+    if(departments[faculty]){
+
+        departments[faculty].forEach(dep=>{
+
+            department.innerHTML += `
+            <option value="${dep}">
+                ${dep}
+            </option>
+            `;
+
+        });
+
     }
 
 });
 
-document.getElementById("registerForm").addEventListener("submit", function(e){
+// Inscription
+document.getElementById("registerBtn").addEventListener("click", async()=>{
 
-    const cardId = document.getElementById("cardId").value;
-    const regex = /^25[0-9]{7}$/;
+    const cardId = document.getElementById("cardId").value.trim().toUpperCase();
+    const fullname = document.getElementById("fullname").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const faculty = document.getElementById("faculty").value;
+    const department = document.getElementById("department").value;
+    const promotion = document.getElementById("promotion").value;
+    const bus = document.getElementById("bus").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if(!regex.test(cardId)){
-        e.preventDefault();
-        alert("Le Card ID doit commencer par 25 et contenir exactement 9 chiffres.");
+    if(
+        !cardId ||
+        !fullname ||
+        !email ||
+        !phone ||
+        !faculty ||
+        !department ||
+        !bus ||
+        !promotion ||
+        !password ||
+        !confirmPassword
+    ){
+        message.className="error";
+        message.innerHTML="Veuillez remplir tous les champs.";
         return;
     }
 
-    alert("Inscription réussie !");
-});
-const departement = {
-    appliquées: [
-        "génie électrique",
-        "électromécanique",
-        "géologie et mines",
-        "electricité",
-    ],
+    if(password !== confirmPassword){
 
-    petrole:[
-        "métalurgie",
-        "biochimie",
-        "chimie industiel",
-    ],
+        message.className="error";
+        message.innerHTML="Les mots de passe ne correspondent pas.";
+        return;
 
-    droits:[
-        "droit public",
-        "droit de l'homme",
-        "droit privé",
-    ],
-
-    agronomie:[
-        "agronomie ",
-    ],
-
-    informatique: [
-        "Génie Logiciel",
-        "Intelligence Artificielle",
-        "Cybersécurité",
-        "Réseaux Informatiques",
-        "système informatique"
-    ],
-
-    gestion: [
-        "Comptabilité",
-        "Finance",
-        "Marketing",
-        "Gestion des Ressources Humaines"
-    ],
-
-    medecine: [
-        "Médecine Générale",
-        "soins infirmiers",
-        "Biologie Médicale",
-        "Santé Publique"
-    ]
-};
-
-const facultySelect = document.getElementById("faculty");
-const departementSelect = document.getElementById("departement");
-
-facultySelect.addEventListener("change", function() {
-
-    const faculty = this.value;
-
-    departementSelect.innerHTML =
-        '<option value="">-- Choisir un département --</option>';
-
-    if (faculty && departement[faculty]) {
-
-        departement[faculty].forEach(departement => {
-
-            const option = document.createElement("option");
-
-            option.value = departement;
-            option.textContent = departement;
-
-            departementSelect.appendChild(option);
-        });
     }
+
+    try{
+
+        // Vérifier si le numéro de carte existe déjà
+        const doc = await db.collection("users").doc(cardId).get();
+
+        if(doc.exists){
+
+            message.className="error";
+            message.innerHTML="Ce numéro de carte existe déjà.";
+            return;
+
+        }
+
+        // Création du compte Firebase Authentication
+        const userCredential = await firebase.auth()
+        .createUserWithEmailAndPassword(email,password);
+
+        const user = userCredential.user;
+
+        // Enregistrement Firestore
+        await db.collection("users").doc(cardId).set({
+
+            uid:user.uid,
+            cardId:cardId,
+            fullname:fullname,
+            email:email,
+            phone:phone,
+            faculty:faculty,
+            department:department,
+            promotion:promotion,
+            bus: bus,
+            role:"student",
+            status:"active",
+            createdAt:firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
+        message.className="success";
+        message.innerHTML="Compte créé avec succès.";
+
+        setTimeout(()=>{
+
+            window.location.href="login.html";
+
+        },1500);
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        message.className="error";
+        message.innerHTML=error.message;
+
+    }
+
 });
+
 </script>
 
 </body>
