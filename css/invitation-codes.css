@@ -1,0 +1,120 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+h1{
+    color:#1565c0;
+    margin-bottom:20px;
+}
+
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+h2{
+    margin-bottom:15px;
+    color:#333;
+}
+
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-bottom:15px;
+    font-size:15px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+#generateBtn{
+    background:#1565c0;
+    color:#fff;
+}
+
+#generateBtn:hover{
+    background:#0d47a1;
+}
+
+.copy-btn{
+    background:#28a745;
+    color:white;
+}
+
+.toggle-btn{
+    background:#ff9800;
+    color:white;
+}
+
+.delete-btn{
+    background:#dc3545;
+    color:white;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#1565c0;
+    color:white;
+}
+
+.status-active{
+    color:green;
+    font-weight:bold;
+}
+
+.status-inactive{
+    color:red;
+    font-weight:bold;
+}
+
+td button{
+    margin:3px;
+}
+
+@media(max-width:768px){
+
+table{
+    display:block;
+    overflow-x:auto;
+}
+
+button{
+    width:100%;
+    margin-top:5px;
+}
+
+}
