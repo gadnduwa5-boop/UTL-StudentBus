@@ -1,164 +1,281 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - StudentBus</title>
 
-<style>
+<title>Connexion | UTL StudentBus</title>
 
-body{
-    font-family:Arial;
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-.box{
-    background:white;
-    padding:25px;
-    width:350px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-input{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
-}
-
-button{
-    width:100%;
-    padding:10px;
-    background:#1565c0;
-    color:white;
-    border:none;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#0d47a1;
-}
-
-#msg{
-    margin-top:10px;
-    text-align:center;
-    font-weight:bold;
-}
-
-</style>
-</head>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1565c0">
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="css/auth.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
 <body>
 
-<div style="text-align: center;">
-    <img src="image/logo-studentbus.png" alt="UTL student
-    Bus" width="180">
+<div class="login-page">
+    <div class="login-left">
+
+        <div class="brand">
+
+            <img src="image/logo.png"
+                 class="logo"
+                 alt="UTL StudentBus">
+
+            <h1>UTL StudentBus</h1>
+
+            <p>
+
+                Bienvenue sur la plateforme officielle de gestion du transport de l'Universté Technologique du Lualaba.
+
+            </p>
+
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+
+                <i class="fa-solid fa-bus"></i>
+
+                <span>Gestion intelligente des bus</span>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <span>Suivi GPS en temps réel</span>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <span>Espace Étudiant sécurisé</span>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>Connexion sécurisée</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Colonne droite -->
+
+    <div class="login-right">
+
+        <div class="login-card">
+
+            <h2>Connexion</h2>
+
+            <p class="subtitle">
+
+                Connectez-vous avec votre numéro de carte.
+
+            </p>
+
+            <form id="loginForm">
+<div class="form-group">
+
+    <label for="cardId">
+
+        Numéro de carte
+
+    </label>
+
+    <div class="input-box">
+
+        <i class="fa-solid fa-id-card"></i>
+
+        <input
+            type="text"
+            id="cardId"
+            name="cardId"
+            maxlength="9"
+            placeholder="251234567"
+            autocomplete="username"
+            required>
+
+    </div>
+
+</div>
+<div class="form-group">
+
+    <label for="password">
+
+        Mot de passe
+
+    </label>
+
+    <div class="input-box">
+
+        <i class="fa-solid fa-lock"></i>
+
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Votre mot de passe"
+            autocomplete="current-password"
+            required>
+
+        <button
+            type="button"
+            id="togglePassword"
+            class="toggle-password"
+            aria-label="Afficher ou masquer le mot de passe">
+
+            <i id="eyeIcon" class="fa-solid fa-eye"></i>
+
+        </button>
+
+    </div>
+
+</div>
+<div class="form-options">
+
+    <label class="remember-me">
+
+        <input
+            type="checkbox"
+            id="rememberMe">
+
+        <span>Se souvenir de moi</span>
+
+    </label>
+
+    <a
+        href="forgot-password.html"
+        class="forgot-link">
+
+        Mot de passe oublié ?
+
+    </a>
+
+</div>
+<button
+    type="submit"
+    id="loginButton"
+    class="login-btn">
+
+    <span id="loginButtonText">
+
+        <i class="fa-solid fa-right-to-bracket"></i>
+
+        Se connecter
+
+    </span>
+
+    <span
+        id="loginLoader"
+        class="button-loader"
+        style="display:none;">
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Connexion...
+
+    </span>
+
+</button>
+
+</form>
+<div class="divider">
+
+    <span>OU</span>
+
+</div>
+<div class="register-links">
+
+    <a href="register.html" class="register-card">
+
+        <i class="fa-solid fa-user-graduate"></i>
+
+        <div>
+
+            <strong>Étudiant</strong>
+
+            <small>Créer un compte étudiant</small>
+
+        </div>
+
+    </a>
+
+    <a href="register-staff.html" class="register-card">
+
+        <i class="fa-solid fa-user-tie"></i>
+
+        <div>
+
+            <strong>Personnel</strong>
+
+            <small>Créer un compte administrateur ou chauffeur</small>
+
+        </div>
+
+    </a>
+
+</div>
+<div class="login-footer">
+
+    <p>
+
+        © 2026 UTL StudentBus
+
+    </p>
+
+    <small>
+
+        Universite Technologique du Lualaba
+
+    </small>
+
 </div>
 
-<div class="box">
-<h2>Connexion</h2>
-
-<input type="text" id="cardId" placeholder="Numéro de carte">
-<input type="password" id="password" placeholder="Mot de passe">
-
-<button onclick="loginUser()">Se connecter</button>
-<p>
-    pas de compte ?
-    <a href="register.html">crée un compte</a>
-</p>
-<p id="msg"></p>
 </div>
 
-<!-- Firebase -->
+</div>
+
+</div>
+
+<div id="loader" class="loader" style="display:none;">
+
+    <div class="spinner"></div>
+
+    <p>Connexion en cours...</p>
+
+</div>
+<div id="toast" class="toast" style="display:none;">
+
+</div>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <script src="js/firebase-config.js"></script>
-
-<script>
-
-async function loginUser(){
-
-    const cardId = document.getElementById("cardId").value.trim().toUpperCase();
-    const password = document.getElementById("password").value;
-
-    if(!cardId || !password){
-        alert("Veuillez remplir tous les champs.");
-        return;
-    }
-
-    try{
-
-        // Rechercher l'utilisateur avec son numéro de carte
-        const doc = await db.collection("users").doc(cardId).get();
-
-        if(!doc.exists){
-            alert("Numéro de carte introuvable.");
-            return;
-        }
-
-        const user = doc.data();
-
-        // Connexion Firebase avec le vrai e-mail enregistré
-        await firebase.auth().signInWithEmailAndPassword(
-            user.email,
-            password
-        );
-
-        // Sauvegarder les informations
-        localStorage.setItem("cardId", user.cardId);
-        localStorage.setItem("role", user.role);
-        localStorage.setItem("fullname", user.fullname);
-
-        // Redirection selon le rôle
-        if(user.role === "student"){
-            window.location.href = "student/dashboard.html";
-        }
-
-        else if(user.role === "chauffeur"){
-            window.location.href = "driver/dashboard.html";
-        }
-
-        else if(user.role === "admin"){
-            window.location.href = "admin/dashboard.html";
-        }
-
-        else{
-            alert("Rôle inconnu.");
-        }
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        switch(error.code){
-
-            case "auth/wrong-password":
-                alert("Mot de passe incorrect.");
-                break;
-
-            case "auth/user-not-found":
-                alert("Utilisateur introuvable.");
-                break;
-
-            default:
-                alert(error.message);
-
-        }
-
-    }
-
-}
-
-</script>
+<script src="js/config.js"></script>
+<script src="js/login.js"></script>
 
 </body>
+
 </html>
