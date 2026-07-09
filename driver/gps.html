@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Gestion des itinéraires | UTL StudentBus</title>
+
+<link rel="shortcut icon"
+href="../image/logo-studentbus.png">
+
+<link rel="manifest"
+href="../manifest.json">
+
+<meta name="theme-color"
+content="#1565c0">
+
+<link rel="stylesheet"
+href="../css/dashboard.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+html,
+body{
+
+margin:0;
+padding:0;
+
+background:#f5f7fb;
+
+font-family:Arial,Helvetica,sans-serif;
+
+}
+
+.header{
+
+position:fixed;
+
+top:0;
+left:0;
+right:0;
+
+height:65px;
+
+background:#1565c0;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 20px;
+
+color:white;
+
+box-shadow:0 3px 10px rgba(0,0,0,.2);
+
+z-index:999;
+
+}
+
+.header-left{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.logo{
+
+width:42px;
+
+height:42px;
+
+border-radius:50%;
+
+background:white;
+
+padding:3px;
+
+}
+
+.title{
+
+font-size:20px;
+
+font-weight:bold;
+
+}
+
+.content{
+
+margin-top:80px;
+
+padding:20px;
+
+padding-bottom:100px;
+
+}
+
+.card{
+
+background:white;
+
+padding:20px;
+
+border-radius:18px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+margin-bottom:20px;
+
+}
+
+.card h2{
+
+margin-bottom:20px;
+
+color:#1565c0;
+
+}
+
+.form-group{
+
+margin-bottom:15px;
+
+}
+
+.form-group label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-weight:bold;
+
+}
+
+.form-group input,
+.form-group select{
+
+width:100%;
+
+padding:12px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+font-size:15px;
+
+outline:none;
+
+}
+
+.form-group input:focus,
+.form-group select:focus{
+
+border-color:#1565c0;
+
+}
+
+#map{
+
+height:350px;
+
+border-radius:15px;
+
+margin-top:20px;
+
+}
+
+.route-list{
+
+margin-top:20px;
+
+}
+
+.stop{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:12px;
+
+margin-bottom:10px;
+
+border-radius:10px;
+
+background:#f7f7f7;
+
+cursor:move;
+
+}
+
+.stop i{
+
+color:#1565c0;
+
+}
+
+.buttons{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-top:20px;
+
+}
+
+.btn{
+
+border:none;
+
+padding:12px 20px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+color:white;
+
+font-weight:bold;
+
+}
+
+.primary{
+
+background:#1565c0;
+
+}
+
+.success{
+
+background:#28a745;
+
+}
+
+.danger{
+
+background:#dc3545;
+
+}
+
+.secondary{
+
+background:#6c757d;
+
+}
+
+.btn:hover{
+
+opacity:.9;
+
+}
+
+@media(max-width:768px){
+
+.buttons{
+
+flex-direction:column;
+
+}
+
+.btn{
+
+width:100%;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="header-left">
+
+<div class="menu-btn"
+onclick="toggleSidebar()">
+
+☰
+</div>
+
+<img
+src="../image/logo-studentbus.png"
+class="logo">
+
+<div class="title">
+
+UTL StudentBus
+
+</div>
+
+</div>
+
+<strong>
+
+Administrateur
+
+</strong>
+
+</header>
+
+<div id="overlay"
+class="overlay">
+
+</div>
+
+<div id="sidebar"
+class="sidebar">
+
+<div class="sidebar-profile">
+
+<img src="../image/default-avatar.png">
+
+<h2>
+
+Administrateur
+
+</h2>
+
+<p>
+
+Gestion des itinéraires
+
+</p>
+
+</div>
+
+<div class="sidebar-menu">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Tableau de bord
+
+</a>
+
+<a href="bus-stops.html">
+
+<i class="fa-solid fa-location-dot"></i>
+
+Arrêts
+
+</a>
+
+<a
+href="routes.html"
+class="active">
+
+<i class="fa-solid fa-route"></i>
+
+Itinéraires
+
+</a>
+
+<a
+href="#"
+onclick="logout()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Déconnexion
+
+</a>
+
+</div>
+
+</div>
+
+<div class="content">
+
+<div class="card">
+
+<h2>
+
+Créer un itinéraire
+
+</h2>
+
+<div class="form-group">
+
+<label>
+
+Nom de l'itinéraire
+
+</label>
+
+<input
+type="text"
+id="routeName"
+placeholder="Ex : Campus Principal">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Bus
+
+</label>
+
+<select id="busSelect">
+
+<option>
+
+Chargement...
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Arrêts disponibles
+
+</label>
+
+<select
+id="stopSelect">
+
+<option>
+
+Chargement...
+
+</option>
+
+</select>
+
+</div>
+
+<div class="buttons">
+
+<button
+class="btn primary"
+onclick="addStopToRoute()">
+
+<i class="fa-solid fa-plus"></i>
+
+Ajouter l'arrêt
+
+</button>
+
+<button
+class="btn success"
+onclick="saveRoute()">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Enregistrer
+
+</button>
+
+<button
+class="btn secondary"
+onclick="clearRoute()">
+
+<i class="fa-solid fa-rotate-left"></i>
+
+Annuler
+
+</button>
+
+</div>
+
+<div id="map"></div>
+
+</div>
+
+<div class="card">
+
+<h2>
+
+Ordre des arrêts
+
+</h2>
+
+<div
+id="routeStops"
+class="route-list">
+
+Aucun arrêt ajouté.
+
+</div>
+
+</div>
+<!-- Firebase -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script>
+
+checkAuth("admin");
+
+loadGoogleMaps("initMap");
+
+let map;
+
+let directionsService;
+
+let directionsRenderer;
+
+let routeStops=[];
+
+/*=====================================
+ INITIALISER GOOGLE MAPS
+=====================================*/
+
+function initMap(){
+
+    map=new google.maps.Map(
+
+        document.getElementById("map"),
+
+        {
+
+            center:{
+
+                lat:-10.7144,
+
+                lng:25.4667
+
+            },
+
+            zoom:14,
+
+            mapTypeId:"roadmap",
+
+            fullscreenControl:false,
+
+            streetViewControl:false
+
+        }
+
+    );
+
+    directionsService=
+    new google.maps.DirectionsService();
+
+    directionsRenderer=
+    new google.maps.DirectionsRenderer({
+
+        map:map,
+
+        suppressMarkers:false
+
+    });
+
+    loadBuses();
+
+    loadStops();
+
+}
+
+/*=====================================
+ CHARGER LES BUS
+=====================================*/
+
+async function loadBuses(){
+
+    const select=
+    document.getElementById("busSelect");
+
+    select.innerHTML="";
+
+    const snapshot=
+    await db.collection("buses").get();
+
+    snapshot.forEach(doc=>{
+
+        const bus=doc.data();
+
+        select.innerHTML+=`
+
+        <option value="${doc.id}">
+
+            ${bus.busNumber || doc.id}
+
+        </option>
+
+        `;
+
+    });
+
+}
+
+/*=====================================
+ CHARGER LES ARRÊTS
+=====================================*/
+
+async function loadStops(){
+
+    const select=
+    document.getElementById("stopSelect");
+
+    select.innerHTML="";
+
+    const snapshot=
+    await db.collection("bus_stops")
+
+    .orderBy("name")
+
+    .get();
+
+    snapshot.forEach(doc=>{
+
+        const stop=doc.data();
+
+        select.innerHTML+=`
+
+        <option value="${doc.id}">
+
+            ${stop.name}
+
+        </option>
+
+        `;
+
+    });
+
+}
+/*=====================================
+ AJOUTER UN ARRÊT À L'ITINÉRAIRE
+=====================================*/
+
+async function addStopToRoute(){
+
+    const stopId = document.getElementById("stopSelect").value;
+
+    if(routeStops.find(stop => stop.id === stopId)){
+
+        alert("Cet arrêt est déjà ajouté.");
+
+        return;
+
+    }
+
+    const doc = await db
+    .collection("bus_stops")
+    .doc(stopId)
+    .get();
+
+    if(!doc.exists){
+
+        return;
+
+    }
+
+    const stop = doc.data();
+
+    routeStops.push({
+
+        id: doc.id,
+
+        name: stop.name,
+
+        latitude: stop.latitude,
+
+        longitude: stop.longitude
+
+    });
+
+    renderStops();
+
+    drawRoute();
+
+}
+
+/*=====================================
+ AFFICHER LES ARRÊTS
+=====================================*/
+
+function renderStops(){
+
+    const container =
+    document.getElementById("routeStops");
+
+    if(routeStops.length===0){
+
+        container.innerHTML="Aucun arrêt ajouté.";
+
+        return;
+
+    }
+
+    container.innerHTML="";
+
+    routeStops.forEach((stop,index)=>{
+
+        container.innerHTML += `
+
+        <div class="stop">
+
+            <div>
+
+                <strong>
+
+                ${index+1}. ${stop.name}
+
+                </strong>
+
+            </div>
+
+            <div>
+
+                <button
+                class="btn danger"
+
+                onclick="removeStop(${index})">
+
+                <i class="fa-solid fa-trash"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+/*=====================================
+ SUPPRIMER UN ARRÊT
+=====================================*/
+
+function removeStop(index){
+
+    routeStops.splice(index,1);
+
+    renderStops();
+
+    drawRoute();
+
+}
+
+/*=====================================
+ DESSINER L'ITINÉRAIRE
+=====================================*/
+
+function drawRoute(){
+
+    if(routeStops.length < 2){
+
+        directionsRenderer.setDirections({
+
+            routes:[]
+
+        });
+
+        return;
+
+    }
+
+    const origin={
+
+        lat:routeStops[0].latitude,
+
+        lng:routeStops[0].longitude
+
+    };
+
+    const destination={
+
+        lat:routeStops[routeStops.length-1].latitude,
+
+        lng:routeStops[routeStops.length-1].longitude
+
+    };
+
+    const waypoints=[];
+
+    for(let i=1;i<routeStops.length-1;i++){
+
+        waypoints.push({
+
+            location:{
+
+                lat:routeStops[i].latitude,
+
+                lng:routeStops[i].longitude
+
+            },
+
+            stopover:true
+
+        });
+
+    }
+
+    directionsService.route({
+
+        origin:origin,
+
+        destination:destination,
+
+        waypoints:waypoints,
+
+        optimizeWaypoints:false,
+
+        travelMode:google.maps.TravelMode.DRIVING
+
+    },
+
+    (result,status)=>{
+
+        if(status==="OK"){
+
+            directionsRenderer.setDirections(result);
+
+        }
+
+    });
+
+}
+/*=====================================
+ ENREGISTRER L'ITINÉRAIRE
+=====================================*/
+
+async function saveRoute(){
+
+    const routeName =
+    document.getElementById("routeName").value.trim();
+
+    const busId =
+    document.getElementById("busSelect").value;
+
+    if(routeName===""){
+
+        alert("Saisissez le nom de l'itinéraire.");
+
+        return;
+
+    }
+
+    if(routeStops.length<2){
+
+        alert("Ajoutez au moins deux arrêts.");
+
+        return;
+
+    }
+
+    try{
+
+        const routeId = await generateRouteId();
+
+        await db.collection("routes")
+
+        .doc(routeId)
+
+        .set({
+
+            routeId:routeId,
+
+            name:routeName,
+
+            busId:busId,
+
+            stops:routeStops.map(stop=>stop.id),
+
+            active:true,
+
+            createdAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
+        alert("Itinéraire enregistré.");
+
+        clearRoute();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
+}
+
+/*=====================================
+ GÉNÉRER UN ID
+=====================================*/
+
+async function generateRouteId(){
+
+    const snapshot =
+    await db.collection("routes").get();
+
+    const number = snapshot.size + 1;
+
+    return "ROUTE-" +
+    String(number).padStart(3,"0");
+
+}
+
+/*=====================================
+ VIDER LE FORMULAIRE
+=====================================*/
+
+function clearRoute(){
+
+    document.getElementById("routeName").value="";
+
+    document.getElementById("busSelect").selectedIndex=0;
+
+    document.getElementById("stopSelect").selectedIndex=0;
+
+    routeStops=[];
+
+    renderStops();
+
+    directionsRenderer.setDirections({
+
+        routes:[]
+
+    });
+
+}
+
+/*=====================================
+ CHARGER LES ITINÉRAIRES
+=====================================*/
+
+function loadRoutes(){
+
+    db.collection("routes")
+
+    .orderBy("name")
+
+    .onSnapshot(snapshot=>{
+
+        console.log(
+
+            "Itinéraires :",snapshot.size
+
+        );
+
+    });
+
+}
+
+loadRoutes();
+
+function toggleSidebar() {
+
+    document.getElementById("sidebar").classList.toggle("active");
+
+    document.getElementById("overlay").classList.toggle("active");
+
+}
+document.getElementById("overlay").onclick = function () {
+
+    document.getElementById("sidebar").classList.remove("active");
+
+    this.classList.remove("active");
+
+};
+</script>
+
+</body>
+
+</html>

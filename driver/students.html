@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes étudiants - UTL StudentBus</title>
+<style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    color:#333;
+}
+
+.header{
+    background:#1565c0;
+    color:white;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px 20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.logo{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:white;
+    padding:5px;
+}
+
+.container{
+    max-width:900px;
+    margin:20px auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+.card h3{
+    color:#1565c0;
+    margin-bottom:15px;
+}
+
+.card p{
+    margin:8px 0;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#1565c0;
+}
+
+button{
+    background:#1565c0;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-right:10px;
+    transition:.3s;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+
+.student-card{
+    background:white;
+    border-left:5px solid #1565c0;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.student-card h4{
+    color:#1565c0;
+    margin-bottom:10px;
+}
+
+.student-card p{
+    margin:5px 0;
+    font-size:15px;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#777;
+    font-size:18px;
+}
+
+@media(max-width:768px){
+
+.header{
+    flex-direction:column;
+    text-align:center;
+}
+
+.logo{
+    width:70px;
+    height:70px;
+}
+
+button{
+    width:100%;
+    margin-bottom:10px;
+}
+.call-btn{
+    display:inline-block;
+    background:#28a745;
+    color:white;
+    text-decoration:none;
+    padding:10px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    margin-top:10px;
+    transition:0.3s;
+}
+
+.call-btn:hover{
+    background:#218838;
+}
+}
+</style>
+
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#1565c0">
+</head>
+
+<body>
+
+<header class="header">
+
+    <img src="../image/logo-studentbus.png"
+         class="logo">
+
+    <div>
+        <h2>UTL StudentBus</h2>
+        <p>Mes étudiants</p>
+    </div>
+
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h3>Informations du bus</h3>
+
+        <p><strong>Bus :</strong> <span id="busId">...</span></p>
+
+        <p><strong>Chauffeur :</strong> <span id="driverName">...</span></p>
+
+        <p><strong>Capacité :</strong> <span id="capacity">...</span></p>
+
+        <p><strong>Étudiants :</strong> <span id="studentCount">0</span></p>
+
+        <p><strong>Places restantes :</strong> <span id="remainingSeats">0</span></p>
+
+    </div>
+
+    <div class="card">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="🔍 Rechercher un étudiant...">
+
+    </div>
+
+    <div class="card">
+
+        <button id="refreshBtn">
+            🔄 Actualiser
+        </button>
+
+        <button onclick="window.location.href='dashboard.html'">
+            ⬅ Retour
+        </button>
+
+    </div>
+
+    <div id="studentsList">
+
+    </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script>
+
+// Vérifier que le chauffeur est connecté
+if (localStorage.getItem("role") !== "chauffeur") {
+    window.location.href = "../login.html";
+}
+
+let allStudents = [];
+
+async function loadStudents() {
+
+    const cardId = localStorage.getItem("cardId");
+
+    if (!cardId) {
+        alert("Chauffeur introuvable.");
+        return;
+    }
+
+    try {
+
+        // Récupérer le chauffeur
+        const driverDoc = await db.collection("users").doc(cardId).get();
+
+        if (!driverDoc.exists) {
+            alert("Chauffeur introuvable.");
+            return;
+        }
+
+        const driver = driverDoc.data();
+
+        document.getElementById("driverName").textContent =
+            driver.fullname;
+
+        const busId = driver.busId;
+
+        if (!busId) {
+            alert("Aucun bus affecté.");
+            return;
+        }
+
+        // Récupérer le bus
+        const busDoc = await db.collection("buses").doc(busId).get();
+
+        if (!busDoc.exists) {
+            alert("Bus introuvable.");
+            return;
+        }
+
+        const bus = busDoc.data();
+
+        document.getElementById("busId").textContent =
+            bus.busId;
+
+        document.getElementById("capacity").textContent =
+            bus.capacity;
+
+        // Étudiants du bus
+        const snapshot = await db.collection("users")
+            .where("role", "==", "student")
+            .where("bus", "==", bus.busId)
+            .get();
+
+        allStudents = [];
+
+        snapshot.forEach(doc => {
+
+            allStudents.push(doc.data());
+
+        });
+
+        document.getElementById("studentCount").textContent =
+            allStudents.length;
+
+        document.getElementById("remainingSeats").textContent =
+            bus.capacity - allStudents.length;
+
+        displayStudents(allStudents);
+
+    }
+    catch (error) {
+
+        console.error(error);
+        alert(error.message);
+
+    }
+
+}
+
+function displayStudents(list) {
+
+    const container = document.getElementById("studentsList");
+
+    container.innerHTML = "";
+
+    if (list.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                Aucun étudiant trouvé.
+            </div>
+        `;
+
+        return;
+    }
+
+    list.forEach(student => {
+
+        container.innerHTML += `
+
+        <div class="student-card">
+
+            <h4>${student.fullname}</h4>
+
+            <p><strong>Carte :</strong> ${student.cardId}</p>
+
+            <p><strong>Téléphone :</strong> ${student.phone}</p>
+
+            <p><strong>Faculté :</strong> ${student.faculty}</p>
+
+            <p><strong>Département :</strong> ${student.department}</p>
+
+            <p><strong>Promotion :</strong> ${student.promotion}</p>
+
+            <br>
+
+            <a href="tel:${student.phone}" class="call-btn">
+                📞 Appeler
+            </a>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+// Recherche
+document.getElementById("search").addEventListener("input", function () {
+
+    const value = this.value.toLowerCase();
+
+    const filtered = allStudents.filter(student =>
+
+        student.fullname.toLowerCase().includes(value) ||
+
+        student.cardId.toLowerCase().includes(value)
+
+    );
+
+    displayStudents(filtered);
+
+});
+
+// Actualiser
+document.getElementById("refreshBtn").addEventListener("click", loadStudents);
+
+// Chargement initial
+loadStudents();
+
+</script>
+
+</body>
+</html>

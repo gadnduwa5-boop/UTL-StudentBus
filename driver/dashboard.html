@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tableau de bord Chauffeur | UTL StudentBus</title>
+
+<link rel="manifest" href="../manifest.json">
+
+<meta name="theme-color" content="#1565c0">
+
+<link rel="stylesheet" href="../css/dashboard.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-left">
+
+        <div class="menu-btn" onclick="toggleSidebar()">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </div>
+
+        <img src="../image/logo.png"
+
+        class="logo"
+
+        alt="UTL StudentBus">
+
+        <h2 class="app-title">
+
+            UTL StudentBus
+
+        </h2>
+
+    </div>
+
+    <div class="notification">
+
+        <i class="fa-solid fa-bell"></i>
+
+        <span id="notificationCount"
+
+        class="notification-badge">
+
+            0
+
+        </span>
+
+    </div>
+
+</header>
+
+<div id="overlay"
+
+class="overlay"></div>
+
+<aside id="sidebar"
+
+class="sidebar">
+
+    <div class="sidebar-profile">
+
+        <img id="driverAvatar"
+
+        src="../image/default-avatar.png">
+
+        <h2 id="driverName">
+
+            Chauffeur
+
+        </h2>
+
+        <p id="driverEmail">
+
+            Chargement...
+
+        </p>
+
+    </div>
+
+    <nav class="sidebar-menu">
+
+        <a href="dashboard.html"
+
+        class="active">
+
+            <i class="fa-solid fa-house"></i>
+
+            Tableau de bord
+
+        </a>
+
+        <a href="map.html">
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+            Carte GPS
+
+        </a>
+
+        <a href="students.html">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            Étudiants
+
+        </a>
+
+        <a href="profile.html">
+
+            <i class="fa-solid fa-user"></i>
+
+            Mon profil
+
+        </a>
+
+        <a href="#"
+
+        onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Déconnexion
+
+        </a>
+
+    </nav>
+
+</aside>
+
+<main class="content">
+
+<h2 class="mb-20">
+
+Tableau de bord Chauffeur
+
+</h2>
+
+<div class="stats">
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-bus stat-icon"></i>
+
+        <div class="stat-title">
+
+            Bus attribué
+
+        </div>
+
+        <div id="assignedBus"
+
+        class="stat-value">
+
+            --
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-user-graduate stat-icon"></i>
+
+        <div class="stat-title">
+
+            Étudiants
+
+        </div>
+
+        <div id="studentCount"
+
+        class="stat-value">
+
+            0
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-location-crosshairs stat-icon"></i>
+
+        <div class="stat-title">
+
+            GPS
+
+        </div>
+
+        <div id="gpsState"
+
+        class="stat-value">
+
+            Hors ligne
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-road stat-icon"></i>
+
+        <div class="stat-title">
+
+            Itinéraire
+
+        </div>
+
+        <div id="routeName"
+
+        class="stat-value">
+
+            --
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        Actions rapides
+
+    </h2>
+
+    <div class="button-group">
+
+        <button
+
+        class="btn btn-success"
+
+        onclick="startTrip()">
+
+            <i class="fa-solid fa-play"></i>
+
+            Démarrer le trajet
+
+        </button>
+
+        <button
+
+        class="btn btn-danger"
+
+        onclick="stopTrip()">
+
+            <i class="fa-solid fa-stop"></i>
+
+            Terminer le trajet
+
+        </button>
+
+        <button
+
+        class="btn btn-primary"
+
+        onclick="shareLocation()">
+
+            <i class="fa-solid fa-location-arrow"></i>
+
+            Partager ma position
+
+        </button>
+
+        <button
+
+        class="btn btn-warning"
+
+        onclick="openMap()">
+
+            <i class="fa-solid fa-map"></i>
+
+            Ouvrir la carte
+
+        </button>
+
+    </div>
+
+</div>
+<!--=========================================
+ INFORMATIONS DU BUS
+==========================================-->
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        <i class="fa-solid fa-bus"></i>
+
+        Informations du bus
+
+    </h2>
+
+    <div class="grid-2">
+
+        <div>
+
+            <p><strong>Numéro du bus :</strong>
+
+            <span id="busNumber">--</span></p>
+
+            <p><strong>Immatriculation :</strong>
+
+            <span id="busPlate">--</span></p>
+
+            <p><strong>Capacité :</strong>
+
+            <span id="busCapacity">--</span></p>
+
+            <p><strong>Statut :</strong>
+
+            <span id="busStatus"
+
+            class="badge badge-success">
+
+                Disponible
+
+            </span></p>
+
+        </div>
+
+        <div>
+
+            <p><strong>Itinéraire :</strong>
+
+            <span id="busRoute">--</span></p>
+
+            <p><strong>Premier arrêt :</strong>
+
+            <span id="firstStop">--</span></p>
+
+            <p><strong>Dernier arrêt :</strong>
+
+            <span id="lastStop">--</span></p>
+
+            <p><strong>Heure de départ :</strong>
+
+            <span id="departureTime">--</span></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--=========================================
+ POSITION GPS
+==========================================-->
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        Position GPS
+
+    </h2>
+
+    <div class="grid-2">
+
+        <div>
+
+            <p><strong>Latitude :</strong>
+
+            <span id="driverLatitude">
+
+                --
+
+            </span></p>
+
+            <p><strong>Longitude :</strong>
+
+            <span id="driverLongitude">
+
+                --
+
+            </span></p>
+
+        </div>
+
+        <div>
+
+            <p><strong>Vitesse :</strong>
+
+            <span id="driverSpeed">
+
+                0 km/h
+
+            </span></p>
+
+            <p><strong>Dernière mise à jour :</strong>
+
+            <span id="lastGpsUpdate">
+
+                --
+
+            </span></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--=========================================
+ ÉTAT DU TRAJET
+==========================================-->
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        <i class="fa-solid fa-road"></i>
+
+        État du trajet
+
+    </h2>
+
+    <div class="grid-2">
+
+        <div>
+
+            <p><strong>Distance parcourue :</strong>
+
+            <span id="tripDistance">
+
+                0 km
+
+            </span></p>
+
+            <p><strong>Temps écoulé :</strong>
+
+            <span id="tripDuration">
+
+                00:00
+
+            </span></p>
+
+        </div>
+
+        <div>
+
+            <p><strong>Prochain arrêt :</strong>
+
+            <span id="nextStop">
+
+                --
+
+            </span></p>
+
+            <p><strong>ETA :</strong>
+
+            <span id="tripETA">
+
+                --
+
+            </span></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--=========================================
+ RÉSUMÉ DU SERVICE
+==========================================-->
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        <i class="fa-solid fa-chart-column"></i>
+
+        Résumé du service
+
+    </h2>
+
+    <div class="grid-2">
+
+        <div>
+
+            <p><strong>Étudiants embarqués :</strong>
+
+            <span id="boardingStudents">
+
+                0
+
+            </span></p>
+
+            <p><strong>Étudiants descendus :</strong>
+
+            <span id="dropStudents">
+
+                0
+
+            </span></p>
+
+        </div>
+
+        <div>
+
+            <p><strong>Arrêts visités :</strong>
+
+            <span id="visitedStops">
+
+                0
+
+            </span></p>
+
+            <p><strong>Trajets effectués :</strong>
+
+            <span id="completedTrips">
+
+                0
+
+            </span></p>
+
+        </div>
+
+    </div>
+
+</div>
+<!--=========================================
+ ÉTUDIANTS DU BUS
+==========================================-->
+
+<div class="card">
+
+    <div class="flex-between">
+
+        <h2 class="card-title">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            Étudiants du bus
+
+        </h2>
+
+        <span id="studentsInBus"
+
+        class="badge badge-primary">
+
+            0 étudiant
+
+        </span>
+
+    </div>
+
+    <div class="table-container">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Carte</th>
+
+                    <th>Nom</th>
+
+                    <th>Faculté</th>
+
+                    <th>Promotion</th>
+
+                    <th>Présence</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="driverStudentsTable">
+
+                <tr>
+
+                    <td colspan="5"
+
+                    class="text-center">
+
+                        Chargement...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!--=========================================
+ ARRÊTS DE L'ITINÉRAIRE
+==========================================-->
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        Arrêts de l'itinéraire
+
+    </h2>
+
+    <div id="driverStopsList"
+
+    class="list">
+
+        <div class="list-item">
+
+            Chargement des arrêts...
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--=========================================
+ NOTIFICATIONS
+==========================================-->
+
+<div class="card">
+
+    <div class="flex-between">
+
+        <h2 class="card-title">
+
+            <i class="fa-solid fa-bell"></i>
+
+            Notifications
+
+        </h2>
+
+        <button
+
+        class="btn btn-secondary"
+
+        onclick="clearDriverNotifications()">
+
+            <i class="fa-solid fa-trash"></i>
+
+            Effacer
+
+        </button>
+
+    </div>
+
+    <div id="driverNotifications"
+
+    class="list">
+
+        <div class="list-item">
+
+            Aucune notification.
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--=========================================
+ HISTORIQUE DES TRAJETS
+==========================================-->
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        Historique des trajets
+
+    </h2>
+
+    <div class="table-container">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Départ</th>
+
+                    <th>Arrivée</th>
+
+                    <th>Distance</th>
+
+                    <th>Durée</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tripHistoryTable">
+
+                <tr>
+
+                    <td colspan="5"
+
+                    class="text-center">
+
+                        Aucun trajet enregistré.
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+<!--=========================================
+ BOTTOM NAVIGATION
+==========================================-->
+
+<nav class="bottom-nav">
+
+    <a href="dashboard.html" class="active">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Accueil</span>
+
+    </a>
+
+    <a href="map.html">
+
+        <i class="fa-solid fa-map-location-dot"></i>
+
+        <span>Carte</span>
+
+    </a>
+
+    <a href="students.html">
+
+        <i class="fa-solid fa-user-graduate"></i>
+
+        <span>Étudiants</span>
+
+    </a>
+
+    <a href="profile.html">
+
+        <i class="fa-solid fa-user"></i>
+
+        <span>Profil</span>
+
+    </a>
+
+</nav>
+
+</main>
+
+<!--=========================================
+ LOADER
+==========================================-->
+
+<div id="loader" class="loader">
+
+    <div class="spinner"></div>
+
+</div>
+
+<!--=========================================
+ FIREBASE
+==========================================-->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<!--=========================================
+ CONFIGURATION
+==========================================-->
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/config.js"></script>
+
+<!--=========================================
+ DASHBOARD
+==========================================-->
+
+<script src="../js/dashboard.js"></script>
+
+<!--=========================================
+ MAP
+==========================================-->
+
+<script src="../js/map.js"></script>
+
+<!--=========================================
+ INITIALISATION
+==========================================-->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async()=>{
+
+    try{
+
+        if(typeof loadDriverProfile==="function"){
+
+            await loadDriverProfile();
+
+        }
+
+        if(typeof loadAssignedBus==="function"){
+
+            await loadAssignedBus();
+
+        }
+
+        if(typeof loadDriverStudents==="function"){
+
+            await loadDriverStudents();
+
+        }
+
+        if(typeof loadDriverStops==="function"){
+
+            await loadDriverStops();
+
+        }
+
+        if(typeof loadDriverNotifications==="function"){
+
+            await loadDriverNotifications();
+
+        }
+
+        if(typeof loadTripHistory==="function"){
+
+            await loadTripHistory();
+
+        }
+
+        if(typeof updateDriverGPS==="function"){
+
+            updateDriverGPS();
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
