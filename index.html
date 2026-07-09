@@ -1,205 +1,686 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>UTL StudentBus</title>
 
-<link rel="shortcut icon" href="image/logo-studentbus.png" type="image/x-icon">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1565c0">
+<meta name="theme-color"
+content="#1565c0">
 
-<style>
+<link rel="manifest"
+href="manifest.json">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
+<link rel="stylesheet"
+href="css/style.css">
 
-body {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url("image/image1.jpg");
-    background-size: cover;
-    background-position: center; 
-    background-attachment: fixed; 
-    color: white;                 
-    font-family: Arial, sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-  }
-
-.container{
-
-background:white;
-width:100%;
-max-width:420px;
-padding:30px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,.25);
-
-animation:fadeIn .8s;
-
-}
-
-@keyframes fadeIn{
-
-from{
-opacity:0;
-transform:translateY(20px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-.logo{
-
-width:120px;
-margin-bottom:15px;
-
-}
-
-h1{
-
-color: #e71b1b;
-margin-bottom:10px;
-
-}
-
-p{
-
-color:#666;
-margin-bottom:30px;
-line-height:1.5;
-
-}
-
-.btn{
-
-display:block;
-width:100%;
-padding:15px;
-margin:12px 0;
-border:none;
-border-radius:12px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-
-}
-
-.student{
-
-background: #d20808;
-color:white;
-
-}
-
-.student:hover{
-
-background:#0d47a1;
-
-}
-
-.staff{
-
-background:#ff9800;
-color:white;
-
-}
-
-.staff:hover{
-
-background:#ef6c00;
-
-}
-
-.login{
-
-background:#28a745;
-color:white;
-
-}
-
-.login:hover{
-
-background:#1e7e34;
-
-}
-
-.footer{
-
-margin-top:20px;
-font-size:13px;
-color:#888;
-
-}
-
-</style>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 
 <body>
+<header class="header">
 
-<div class="container">
+    <div class="logo">
 
-<img src="image/logo-studentbus.png"
-class="logo">
+        <img
+        src="image/logo.png"
+        alt="UTL StudentBus">
 
-<h1>UTL StudentBus</h1>
+        <h2>
 
-<p>
+            UTL StudentBus
 
-Système intelligent de gestion du transport des étudiants de l'Université Technologique du Lualaba.
+        </h2>
 
-</p>
+    </div>
 
-<button class="btn student"
-onclick="window.location.href='register.html'">
+    <nav>
 
-🎓 Inscription Étudiant
+        <a href="index.html">
 
-</button>
+            Accueil
 
-<button class="btn staff"
-onclick="window.location.href='register-staff.html'">
+        </a>
 
-👨‍✈️ Inscription Personnel
+        <a href="#services">
 
-</button>
+            Services
 
-<button class="btn login"
-onclick="window.location.href='login.html'">
+        </a>
 
-🔑 Se connecter
+        <a href="#about">
 
-</button>
+            À propos
 
-<div class="footer">
+        </a>
 
+        <a href="login.html"
+           class="login-btn">
 
+            Connexion
 
-</div>
+        </a>
 
-</div>
+    </nav>
 
-<script>
+</header>
+<section class="hero">
 
-if("serviceWorker" in navigator){
+    <div class="hero-text">
 
-navigator.serviceWorker.register("sw.js");
+        <h1>
 
-}
+            Le transport intelligent de l'Université Technologique du Lualaba
 
+        </h1>
+
+        <p>
+
+            Suivez votre bus en temps réel, recevez les horaires, les notifications et voyagez en toute sécurité avec UTL StudentBus.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+            href="login.html"
+            class="primary-btn">
+
+                Se connecter
+
+            </a>
+
+            <a
+            href="register.html"
+            class="secondary-btn">
+
+                Créer un compte
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-image">
+
+        <img
+        src="image/image1.jpg"
+        alt="Bus">
+
+    </div>
+
+</section>
+
+<section id="services" class="services">
+
+    <div class="section-title">
+
+        <h2>Nos fonctionnalités</h2>
+
+        <p>
+
+            Une plateforme moderne pour les étudiants, les chauffeurs et les administrateurs de l'Université Technologique du Lualaba.
+
+        </p>
+
+    </div>
+
+    <div class="services-grid">
+
+        <div class="service-card">
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+            <h3>Suivi GPS</h3>
+
+            <p>
+
+                Suivez les bus universitaires en temps réel sur une carte interactive.
+
+            </p>
+
+        </div>
+
+        <div class="service-card">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <h3>Notifications</h3>
+
+            <p>
+
+                Recevez des alertes sur les départs, les arrivées et les changements d'itinéraire.
+
+            </p>
+
+        </div>
+
+        <div class="service-card">
+
+            <i class="fa-solid fa-route"></i>
+
+            <h3>Itinéraires</h3>
+
+            <p>
+
+                Consultez les trajets, les arrêts et les heures estimées d'arrivée.
+
+            </p>
+
+        </div>
+
+        <div class="service-card">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            <h3>Espace étudiant</h3>
+
+            <p>
+
+                Accédez à votre tableau de bord et aux informations de votre bus.
+
+            </p>
+
+        </div>
+
+        <div class="service-card">
+
+            <i class="fa-solid fa-bus"></i>
+
+            <h3>Espace chauffeur</h3>
+
+            <p>
+
+                Gérez les trajets et partagez votre position GPS en direct.
+
+            </p>
+
+        </div>
+
+        <div class="service-card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>Administration</h3>
+
+            <p>
+
+                Gérez les étudiants, les chauffeurs, les bus et les statistiques de transport.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<section id="about" class="about">
+
+    <div class="section-title">
+
+        <h2>
+
+            Pourquoi choisir UTL StudentBus ?
+
+        </h2>
+
+        <p>
+
+            Une solution moderne pour améliorer le transport universitaire.
+
+        </p>
+
+    </div>
+
+    <div class="about-container">
+
+        <div class="about-text">
+
+            <h3>
+
+                Une plateforme pensée pour l'Université Technologique du Lualaba 
+
+            </h3>
+
+            <p>
+
+                UTL StudentBus simplifie la gestion des transports grâce à la géolocalisation, aux notifications en temps réel et à une administration centralisée.
+
+            </p>
+
+            <ul class="about-list">
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Localisation GPS des bus.
+
+                </li>
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Notifications automatiques.
+
+                </li>
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Gestion des étudiants et chauffeurs.
+
+                </li>
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Sécurité des comptes.
+
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-bus"></i>
+
+                <h2 id="busCount">0</h2>
+
+                <p>Bus</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <h2 id="studentCount">0</h2>
+
+                <p>Étudiants</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-user-tie"></i>
+
+                <h2 id="driverCount">0</h2>
+
+                <p>Chauffeurs</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-route"></i>
+
+                <h2 id="routeCount">0</h2>
+
+                <p>Trajets</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="gps-section">
+
+    <div class="section-title">
+
+        <h2>
+
+            Localisation des bus
+
+        </h2>
+
+        <p>
+
+            Consultez la position des bus universitaires sur une carte interactive.
+
+        </p>
+
+    </div>
+
+    <div class="gps-container">
+
+        <div class="gps-map">
+
+            <div id="homeMap"></div>
+
+        </div>
+
+        <div class="gps-info">
+
+            <div class="info-card">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <div>
+
+                    <h3>Suivi en temps réel</h3>
+
+                    <p>
+
+                        Visualisez la position de chaque bus directement sur la carte.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <div>
+
+                    <h3>Heure d'arrivée</h3>
+
+                    <p>
+
+                        Estimation du temps d'arrivée grâce au GPS.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <i class="fa-solid fa-route"></i>
+
+                <div>
+
+                    <h3>Trajets intelligents</h3>
+
+                    <p>
+
+                        Consultez les itinéraires empruntés par les bus UTL.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <div>
+
+                    <h3>Alertes automatiques</h3>
+
+                    <p>
+
+                        Recevez des notifications lors de l'arrivée de votre bus.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="testimonials">
+
+    <div class="section-title">
+
+        <h2>
+
+            Ce que les utilisateurs apprécient
+
+        </h2>
+
+    </div>
+
+    <div class="testimonial-grid">
+
+        <div class="testimonial-card">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            <p>
+
+                "Grâce à UTL StudentBus, je sais exactement quand mon bus arrive."
+
+            </p>
+
+            <h4>Étudiant</h4>
+
+        </div>
+
+        <div class="testimonial-card">
+
+            <i class="fa-solid fa-bus"></i>
+
+            <p>
+
+                "Le partage de ma position GPS facilite la communication avec les étudiants."
+
+            </p>
+
+            <h4>Chauffeur</h4>
+
+        </div>
+
+        <div class="testimonial-card">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            <p>
+
+                "L'administration des bus et des étudiants est devenue beaucoup plus simple."
+
+            </p>
+
+            <h4>Administrateur</h4>
+
+        </div>
+
+    </div>
+
+</section>
+<section id="contact" class="contact">
+
+    <div class="section-title">
+
+        <h2>
+
+            Contactez-nous
+
+        </h2>
+
+        <p>
+
+            Une question ? Une suggestion ? Notre équipe est à votre disposition.
+
+        </p>
+
+    </div>
+
+    <div class="contact-container">
+
+        <div class="contact-info">
+
+            <div class="contact-item">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <div>
+
+                    <h3>Adresse</h3>
+                    <p> RN 39, Q/Musompo, Av Malula</p>
+                    <p>
+                        Université Technologique du lualaba, Kolwezi, République Démocratique du Congo
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="contact-item">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <div>
+
+                    <h3>Email</h3>
+
+                    <p>
+
+                        contact@utlstudentbus.com
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="contact-item">
+
+                <i class="fa-solid fa-phone"></i>
+
+                <div>
+
+                    <h3>Téléphone</h3>
+
+                    <p>
+
+                        +243 XX XXX XX XX
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="contact-card">
+
+            <h3>
+
+                Besoin d'aide ?
+
+            </h3>
+
+            <p>
+
+                Connectez-vous à votre espace personnel pour accéder à toutes les fonctionnalités de UTL StudentBus.
+
+            </p>
+
+            <a href="login.html" class="primary-btn">
+
+                Se connecter
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-logo">
+
+            <img src="image/logo.png" alt="UTL StudentBus">
+
+            <h3>UTL StudentBus</h3>
+
+            <p>
+
+                Une solution moderne pour le transport de l'université technologique du lualaba.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h4>Navigation</h4>
+
+            <a href="index.html">Accueil</a>
+
+            <a href="#services">Services</a>
+
+            <a href="#about">À propos</a>
+
+            <a href="#contact">Contact</a>
+
+        </div>
+
+        <div class="footer-social">
+
+            <h4>Suivez-nous</h4>
+
+            <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+
+            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+
+            <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+
+            <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+
+            © 2026 UTL StudentBus - Tous droits réservés.
+
+        </p>
+
+    </div>
+
+</footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script async
+defer
+src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initHomeMap">
 </script>
 
+<script src="js/firebase-config.js"></script>
+
+<script src="js/config.js"></script>
+
+<script src="js/index.js"></script>
+
 </body>
+
 </html>
