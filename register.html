@@ -1,50 +1,311 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inscription Étudiant - UTL StudentBus</title>
 
-<link rel="stylesheet" href="css/register.css">
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Inscription Étudiant | UTL StudentBus</title>
+
+<meta name="theme-color"
+content="#1565c0">
+
+<link rel="manifest"
+href="manifest.json">
+
+<link rel="stylesheet"
+href="css/auth.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="login-page">
 
-<div style="text-align: center;">
-    <img src="image/logo-studentbus.png" alt="UTL student
-    Bus" width="180">
+<div class="login-left">
+
+<div class="brand">
+
+<img src="image/logo.png"
+
+class="logo"
+
+alt="UTL StudentBus">
+
+<h1>
+
+UTL StudentBus
+
+</h1>
+
+<p>
+
+Créez votre compte étudiant pour accéder au suivi de votre bus universitaire.
+
+</p>
+
 </div>
 
-<h2>Inscription Étudiant</h2>
+<div class="features">
 
-<div class="form">
+<div class="feature">
 
-<div class="input-group">
-<label>Numéro de carte</label>
-<input type="text" id="cardId" placeholder="Ex : STD0001">
+<i class="fa-solid fa-user-plus"></i>
+
+<span>
+
+Inscription rapide
+
+</span>
+
 </div>
 
-<div class="input-group">
-<label>Nom complet</label>
-<input type="text" id="fullname" placeholder="Votre nom complet">
+<div class="feature">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+<span>
+
+Suivi GPS du bus
+
+</span>
+
 </div>
 
-<div class="input-group">
-<label>Email</label>
-<input type="email" id="email" placeholder="exemple@gmail.com">
+<div class="feature">
+
+<i class="fa-solid fa-bell"></i>
+
+<span>
+
+Notifications en temps réel
+
+</span>
+
 </div>
 
-<div class="input-group">
-<label>Téléphone</label>
-<input type="tel" id="phone" placeholder="+243 9XXXXXXXX">
+<div class="feature">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+<span>
+
+Compte sécurisé
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="login-right">
+
+<div class="login-card">
+
+<h2>
+
+Créer un compte
+
+</h2>
+
+<p class="subtitle">
+
+Inscription Étudiant
+
+</p>
+
+<form id="registerForm">
+
+<div class="form-group">
+
+<label>
+
+Nom complet
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-user"></i>
+
+<input
+
+type="text"
+
+id="fullName"
+
+placeholder="Nom complet"
+
+required>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Sexe
+
+</label>
+
+<select
+
+id="gender"
+
+class="form-control"
+
+required>
+
+<option value="">
+
+Sélectionner
+
+</option>
+
+<option value="Masculin">
+
+Masculin
+
+</option>
+
+<option value="Féminin">
+
+Féminin
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Date de naissance
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-calendar"></i>
+
+<input
+
+type="date"
+
+id="birthDate"
+
+required>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Téléphone
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-phone"></i>
+
+<input
+
+type="tel"
+
+id="phone"
+
+placeholder="+243..."
+
+required>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Adresse e-mail
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input
+
+type="email"
+
+id="email"
+
+placeholder="nom@email.com"
+
+required>
+
+</div>
+
+</div>
+<!--=========================================
+ INFORMATIONS UNIVERSITAIRES
+==========================================-->
+
+<div class="form-group">
+
+<label>
+
+Numéro de carte étudiant
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-id-card"></i>
+
+<input
+
+type="text"
+
+id="cardId"
+
+maxlength="9"
+
+placeholder="2********"
+
+required>
+
+</div>
+
+<small id="cardIdMessage"
+
+class="input-message">
+
+</small>
+
 </div>
 
 <div class="input-group">
 <label>Faculté</label>
 <select id="faculty">
-<option value="">Sélectionner</option>\
+<option value="">Sélectionner</option>
 <option value="Polytechnique">Polytechnique</option>
 <option value="Sciences Informatiques">Sciences Informatiques</option>
 <option value="architecture">architecture</option>
@@ -57,16 +318,48 @@
 </select>
 </div>
 
-<div class="input-group">
-<label>Département</label>
-<select id="department">
-<option value="">Sélectionner d'abord une faculté</option>
+<div class="form-group">
+
+<label>
+
+Département
+
+</label>
+
+<select
+
+id="department"
+
+class="form-control"
+
+required>
+
+<option value="">
+
+Choisissez d'abord une faculté
+
+</option>
+
 </select>
+
 </div>
 
-<div class="input-group">
-<label>Promotion</label>
-<select id="promotion">
+<div class="form-group">
+
+<label>
+
+Promotion
+
+</label>
+
+<select
+
+id="promotion"
+
+class="form-control"
+
+required>
+
 <option value="">Sélectionner</option>
 <option>L1</option>
 <option>L2</option>
@@ -76,266 +369,431 @@
 <option>Master 1</option>
 <option>Master 2</option>
 </select>
-</div>
-<div class="input-group">
-    <label>Bus</label>
-    <select id="bus">
-        <option value="">Chargement des bus...</option>
-    </select>
-</div>
-<label>Mot de passe</label>
-<input type="password" id="password" placeholder="Mot de passe">
+
 </div>
 
-<div class="input-group">
-<label>Confirmer le mot de passe</label>
-<input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe">
+<div class="form-group">
+
+<label>
+
+Année académique
+
+</label>
+
+<select
+
+id="academicYear"
+
+class="form-control"
+
+required>
+
+<option value="">
+
+Sélectionnez
+
+</option>
+
+<option value="2026-2027">
+
+2026 - 2027
+
+</option>
+
+<option value="2027-2028">
+
+2027 - 2028
+
+</option>
+
+<option value="2028-2029">
+
+2028 - 2029
+
+</option>
+
+</select>
+
 </div>
 
-<button id="registerBtn">
-Créer mon compte
+<div class="form-group">
+
+<label>
+
+Résidence / Quartier
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-location-dot"></i>
+
+<input
+
+type="text"
+
+id="address"
+
+placeholder="Votre résidence"
+
+required>
+
+</div>
+
+</div>
+<!--=========================================
+ SÉCURITÉ
+==========================================-->
+
+<div class="form-group">
+
+<label>
+
+Mot de passe
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input
+
+type="password"
+
+id="password"
+
+placeholder="Créer un mot de passe"
+
+required>
+
+<button
+
+type="button"
+
+class="toggle-password"
+
+onclick="togglePassword('password','eyePassword')">
+
+<i
+
+id="eyePassword"
+
+class="fa-solid fa-eye">
+
+</i>
+
 </button>
 
-<p id="message"></p>
+</div>
 
-<p class="login">
-Déjà un compte ?
-<a href="login.html">Se connecter</a>
-</p>
+</div>
+
+<div class="password-strength">
+
+<div
+
+id="passwordStrengthBar"
+
+class="strength-bar">
 
 </div>
 
 </div>
+
+<small
+
+id="passwordStrengthText"
+
+class="input-message">
+
+Le mot de passe doit contenir au moins 8 caractères.
+
+</small>
+
+<div class="form-group">
+
+<label>
+
+Confirmer le mot de passe
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input
+
+type="password"
+
+id="confirmPassword"
+
+placeholder="Confirmer le mot de passe"
+
+required>
+
+<button
+
+type="button"
+
+class="toggle-password"
+
+onclick="togglePassword('confirmPassword','eyeConfirmPassword')">
+
+<i
+
+id="eyeConfirmPassword"
+
+class="fa-solid fa-eye">
+
+</i>
+
+</button>
+
+</div>
+
+<small
+
+id="confirmPasswordMessage"
+
+class="input-message">
+
+</small>
+
+</div>
+
+<div class="checkbox-group">
+
+<label>
+
+<input
+
+type="checkbox"
+
+id="acceptTerms"
+
+required>
+
+J'accepte les conditions d'utilisation et la politique de confidentialité.
+
+</label>
+
+</div>
+
+<button
+
+type="submit"
+
+id="registerButton"
+
+class="login-btn">
+
+<span
+
+id="registerButtonText">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Créer mon compte
+
+</span>
+
+<span
+
+id="registerLoader"
+
+class="button-loader"
+
+style="display:none;">
+
+<i class="fa-solid fa-spinner fa-spin"></i>
+
+Création du compte...
+
+</span>
+
+</button>
+<!--=========================================
+ LIENS
+==========================================-->
+
+<div class="divider">
+
+    <span>OU</span>
+
+</div>
+
+<div class="login-footer">
+
+    <p>
+
+        Vous avez déjà un compte ?
+
+    </p>
+
+    <a
+
+    href="login.html"
+
+    class="forgot-link">
+
+        <i class="fa-solid fa-right-to-bracket"></i>
+
+        Se connecter
+
+    </a>
+
+</div>
+
+<div class="register-info">
+
+    <div class="info-card">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <div>
+
+            <strong>Validation du compte</strong>
+
+            <p>
+
+                Après votre inscription, votre compte devra être validé par un administrateur avant de pouvoir utiliser les services de UTL StudentBus.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!--=========================================
+ LOADER
+==========================================-->
+
+<div
+
+id="loader"
+
+class="loader"
+
+style="display:none;">
+
+    <div class="spinner"></div>
+
+    <p>
+
+        Création du compte...
+
+    </p>
+
+</div>
+
+<!--=========================================
+ TOAST
+==========================================-->
+
+<div
+
+id="toast"
+
+class="toast"
+
+style="display:none;">
+
+</div>
+
+<!--=========================================
+ FIREBASE
+==========================================-->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
+<!--=========================================
+ CONFIGURATION
+==========================================-->
+
 <script src="js/firebase-config.js"></script>
+
+<script src="js/config.js"></script>
+
+<!--=========================================
+ REGISTER
+==========================================-->
+
+<script src="js/register.js"></script>
+<!--=========================================
+ INITIALISATION
+==========================================-->
+
 <script>
-const message = document.getElementById("message");
-// Charger les bus depuis Firestore
 
-async function loadBuses() {
+/*=========================================
+ AFFICHER / MASQUER LE MOT DE PASSE
+=========================================*/
 
-    const select = document.getElementById("bus");
-    select.innerHTML = '<option value="">Sélectionner un bus</option>';
+function togglePassword(inputId,iconId){
 
-    const snapshot = await db.collection("buses").get();
+    const input=document.getElementById(inputId);
 
-    for (const doc of snapshot.docs) {
+    const icon=document.getElementById(iconId);
 
-        const bus = doc.data();
+    if(input.type==="password"){
 
-        // Nom du chauffeur
-        let chauffeur = "Non affecté";
+        input.type="text";
 
-        if (bus.driverId) {
-            const driverDoc = await db.collection("users")
-                .doc(bus.driverId)
-                .get();
+        icon.className="fa-solid fa-eye-slash";
 
-            if (driverDoc.exists) {
-                chauffeur = driverDoc.data().fullname;
-            }
-        }
+    }else{
 
-        // Nombre d'étudiants inscrits
-        const students = await db.collection("users")
-            .where("role", "==", "student")
-            .where("bus", "==", bus.busId)
-            .get();
+        input.type="password";
 
-        const occupied = students.size;
-        const remaining = bus.capacity - occupied;
+        icon.className="fa-solid fa-eye";
 
-        // Si le bus est complet
-        if (remaining <= 0) {
-
-            select.innerHTML += `
-                <option disabled>
-                    ${bus.busId} — ${chauffeur} (Complet)
-                </option>
-            `;
-
-        } else {
-
-            select.innerHTML += `
-                <option value="${bus.busId}">
-                    ${bus.busId} — ${chauffeur} (${remaining} places restantes)
-                </option>
-            `;
-
-        }
     }
+
 }
 
-loadBuses();
+/*=========================================
+ INITIALISATION
+=========================================*/
 
-// Départements par faculté
-const departments = {
-    "Sciences Informatiques": [
-        "Génie Informatique",
-        "Génie Logiciel",
-        "inteligence artificielle",
-    ],
-    "Médecine": [
-        "Médecine Générale",
-        "soins Généraux",
-    ],
-    "Droit": [
-        "Droit Minier et droit de l'environnement",
-        "Droit numérique",
-        "Droit des Affaires et Arbitrage",
-        "Criminologie",
-    ],
-    "Économie": [
-        "Économie de Gestion",
-        "management",
-    ],
-    "Sciences Agronomiques": [
-        "Technique Agricoles",
-        "Sciences Agronomiques",
-        "Gestion des ressources naturelles renouvelables",
-        "Agroéconomique",
-    ],
-    "Polytechnique": [
-        "Chimie industrielle",
-        "Génie Civil",
-        "Électromécanique",
-        "Géologie et mines",
-        "Génie électrique",
-        "Pétrole et Gaz",
-        "Métallurgie",
-    
-    ],
-    "architecture": [
-        "architecture"
-    ],
-    "information": [
-        "journalisme et multi média",
-        "Multimédia et communication digital",
-        "communication des organisations",
-    ],
-};
+document.addEventListener("DOMContentLoaded",()=>{
 
-// Chargement des départements
-document.getElementById("faculty").addEventListener("change", function(){
+    /* Charger les départements */
 
-    const faculty = this.value;
-    const department = document.getElementById("department");
+    if(typeof initializeDepartments==="function"){
 
-    department.innerHTML = "<option value=''>Sélectionner</option>";
-
-    if(departments[faculty]){
-
-        departments[faculty].forEach(dep=>{
-
-            department.innerHTML += `
-            <option value="${dep}">
-                ${dep}
-            </option>
-            `;
-
-        });
+        initializeDepartments();
 
     }
 
-});
+    /* Activer la validation */
 
-// Inscription
-document.getElementById("registerBtn").addEventListener("click", async()=>{
+    if(typeof initializeRegister==="function"){
 
-    const cardId = document.getElementById("cardId").value.trim().toUpperCase();
-    const fullname = document.getElementById("fullname").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const faculty = document.getElementById("faculty").value;
-    const department = document.getElementById("department").value;
-    const promotion = document.getElementById("promotion").value;
-    const bus = document.getElementById("bus").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-
-    if(
-        !cardId ||
-        !fullname ||
-        !email ||
-        !phone ||
-        !faculty ||
-        !department ||
-        !bus ||
-        !promotion ||
-        !password ||
-        !confirmPassword
-    ){
-        message.className="error";
-        message.innerHTML="Veuillez remplir tous les champs.";
-        return;
-    }
-
-    if(password !== confirmPassword){
-
-        message.className="error";
-        message.innerHTML="Les mots de passe ne correspondent pas.";
-        return;
+        initializeRegister();
 
     }
 
-    try{
+    /* Focus automatique */
 
-        // Vérifier si le numéro de carte existe déjà
-        const doc = await db.collection("users").doc(cardId).get();
+    const fullName=document.getElementById("fullName");
 
-        if(doc.exists){
+    if(fullName){
 
-            message.className="error";
-            message.innerHTML="Ce numéro de carte existe déjà.";
-            return;
-
-        }
-
-        // Création du compte Firebase Authentication
-        const userCredential = await firebase.auth()
-        .createUserWithEmailAndPassword(email,password);
-
-        const user = userCredential.user;
-
-        // Enregistrement Firestore
-        await db.collection("users").doc(cardId).set({
-
-            uid:user.uid,
-            cardId:cardId,
-            fullname:fullname,
-            email:email,
-            phone:phone,
-            faculty:faculty,
-            department:department,
-            promotion:promotion,
-            bus: bus,
-            role:"student",
-            status:"active",
-            createdAt:firebase.firestore.FieldValue.serverTimestamp()
-
-        });
-
-        message.className="success";
-        message.innerHTML="Compte créé avec succès.";
-
-        setTimeout(()=>{
-
-            window.location.href="login.html";
-
-        },1500);
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        message.className="error";
-        message.innerHTML=error.message;
+        fullName.focus();
 
     }
 
@@ -344,4 +802,5 @@ document.getElementById("registerBtn").addEventListener("click", async()=>{
 </script>
 
 </body>
+
 </html>
