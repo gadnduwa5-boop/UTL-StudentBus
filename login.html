@@ -23,6 +23,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <body>
 
 <div class="login-page">
+
+    <!-- Colonne gauche -->
+
     <div class="login-left">
 
         <div class="brand">
@@ -35,7 +38,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
             <p>
 
-                Bienvenue sur la plateforme officielle de gestion du transport de l'Universté Technologique du Lualaba.
+                Bienvenue sur la plateforme officielle de gestion du transport universitaire.
 
             </p>
 
@@ -79,7 +82,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
     </div>
 
-    <!-- Colonne droite -->
+ 
 
     <div class="login-right">
 
@@ -94,6 +97,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
             </p>
 
             <form id="loginForm">
+
 <div class="form-group">
 
     <label for="cardId">
@@ -111,13 +115,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
             id="cardId"
             name="cardId"
             maxlength="9"
-            placeholder="251234567"
+            placeholder="2********"
             autocomplete="username"
             required>
 
     </div>
 
 </div>
+
 <div class="form-group">
 
     <label for="password">
@@ -151,6 +156,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     </div>
 
 </div>
+
 <div class="form-options">
 
     <label class="remember-me">
@@ -172,6 +178,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     </a>
 
 </div>
+
 <button
     type="submit"
     id="loginButton"
@@ -199,11 +206,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 </button>
 
 </form>
+
 <div class="divider">
 
     <span>OU</span>
 
 </div>
+
 <div class="register-links">
 
     <a href="register.html" class="register-card">
@@ -235,6 +244,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     </a>
 
 </div>
+
 <div class="login-footer">
 
     <p>
@@ -245,7 +255,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
     <small>
 
-        Universite Technologique du Lualaba
+        Version 2.0
 
     </small>
 
@@ -264,6 +274,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     <p>Connexion en cours...</p>
 
 </div>
+
+
 <div id="toast" class="toast" style="display:none;">
 
 </div>
@@ -274,6 +286,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="js/firebase-config.js"></script>
 <script src="js/config.js"></script>
+
+<script src="js/utils.js"></script>
+
 <script src="js/login.js"></script>
 
 </body>
