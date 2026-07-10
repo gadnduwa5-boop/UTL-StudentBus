@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Étudiant | UTL StudentBus</title>
+
+<meta name="theme-color" content="#1565c0">
+
+<link rel="manifest" href="../manifest.json">
+
+<link rel="stylesheet" href="../css/dashboard.css">
+
+<link rel="stylesheet" href="../css/student.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+
+            <img
+                src="../image/logo.png"
+                class="logo"
+                alt="UTL StudentBus">
+
+            <h2>UTL StudentBus</h2>
+
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="#" class="active">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>Accueil</span>
+
+            </a>
+
+            <a href="#studentMap">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                <span>Localisation</span>
+
+            </a>
+
+            <a href="#notifications">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <span>Notifications</span>
+
+            </a>
+
+            <a href="#profile">
+
+                <i class="fa-solid fa-user"></i>
+
+                <span>Mon profil</span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <h1>
+
+                Tableau de bord Étudiant
+
+            </h1>
+
+            <div class="topbar-actions">
+
+                <button
+                    id="refreshBtn"
+                    class="action-btn secondary">
+
+                    <i class="fa-solid fa-rotate"></i>
+
+                    Actualiser
+
+                </button>
+
+                <button
+                    id="logoutBtn"
+                    class="action-btn">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Déconnexion
+
+                </button>
+
+            </div>
+
+        </header>
+<section class="student-header fade-in">
+
+    <div class="student-profile">
+
+        <img
+            id="studentPhoto"
+            src="../image/avatar.png"
+            alt="Photo de profil">
+
+        <div class="student-info">
+
+            <h2 id="studentName">
+
+                Chargement...
+
+            </h2>
+
+            <p>
+
+                Numéro de carte :
+                <strong id="profileCardId">-</strong>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="bus-card fade-in">
+
+    <div class="bus-card-left">
+
+        <h2 id="busNumber">
+
+            Aucun bus
+
+        </h2>
+
+        <p>
+
+            Chauffeur :
+            <strong id="driverName">-</strong>
+
+        </p>
+
+    </div>
+
+    <div class="bus-card-right">
+
+        <span
+            id="busStatus"
+            class="bus-status">
+
+            Hors service
+
+        </span>
+
+    </div>
+
+</section>
+
+<section class="student-grid">
+
+    <div class="student-card">
+
+        <h3>
+
+            Informations personnelles
+
+        </h3>
+
+        <div class="info-list">
+
+            <div class="info-item">
+
+                <span>Nom complet</span>
+
+                <span id="profileName">-</span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Faculté</span>
+
+                <span id="profileFaculty">-</span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Département</span>
+
+                <span id="profileDepartment">-</span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Promotion</span>
+
+                <span id="profilePromotion">-</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="student-card">
+
+        <h3>
+
+            Actions rapides
+
+        </h3>
+
+        <div class="quick-actions">
+
+            <button class="quick-btn">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                Voir mon bus
+
+            </button>
+
+            <button class="quick-btn">
+
+                <i class="fa-solid fa-route"></i>
+
+                Itinéraire
+
+            </button>
+
+            <button class="quick-btn">
+
+                <i class="fa-solid fa-bell"></i>
+
+                Notifications
+
+            </button>
+
+            <button class="quick-btn">
+
+                <i class="fa-solid fa-user"></i>
+
+                Mon profil
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="stats-grid fade-in">
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-bus"></i>
+
+        <h2 id="studentBusTrips">
+
+            0
+
+        </h2>
+
+        <p>Trajets effectués</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-route"></i>
+
+        <h2 id="studentStops">
+
+            0
+
+        </h2>
+
+        <p>Arrêts desservis</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-bell"></i>
+
+        <h2 id="notificationCount">
+
+            0
+
+        </h2>
+
+        <p>Notifications</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-calendar-check"></i>
+
+        <h2 id="attendanceRate">
+
+            0%
+
+        </h2>
+
+        <p>Taux de présence</p>
+
+    </div>
+
+</section>
+
+<section class="schedule-card fade-in">
+
+    <h3>
+
+        Horaires du bus
+
+    </h3>
+
+    <div id="scheduleContainer">
+
+        <div class="schedule-item">
+
+            <span class="schedule-time">
+
+                --
+
+            </span>
+
+            <span class="schedule-stop">
+
+                Aucune donnée disponible
+
+            </span>
+
+            <span class="schedule-status">
+
+                En attente
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="student-grid fade-in">
+
+    <div class="student-card">
+
+        <h3>
+
+            Prochain arrêt
+
+        </h3>
+
+        <div class="info-list">
+
+            <div class="info-item">
+
+                <span>Arrêt actuel</span>
+
+                <span id="currentStop">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Prochain arrêt</span>
+
+                <span id="nextStop">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Heure estimée</span>
+
+                <span id="estimatedArrival">
+
+                    --
+
+                    :--
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="student-card">
+
+        <h3>
+
+            Informations du chauffeur
+
+        </h3>
+
+        <div class="info-list">
+
+            <div class="info-item">
+
+                <span>Nom</span>
+
+                <span id="driverFullName">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Téléphone</span>
+
+                <span id="driverPhone">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Bus</span>
+
+                <span id="driverBus">
+
+                    -
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="map-card fade-in">
+
+    <h3>
+
+        Localisation du bus en temps réel
+
+    </h3>
+
+    <div id="studentMap"></div>
+
+</section>
+
+<section
+    id="profile"
+    class="student-grid fade-in">
+
+    <div class="student-card">
+
+        <h3>
+
+            Informations universitaires
+
+        </h3>
+
+        <div class="info-list">
+
+            <div class="info-item">
+
+                <span>Université</span>
+
+                <span id="universityName">
+
+                    Université Technologique de Lubumbashi
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Année académique</span>
+
+                <span id="academicYear">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Statut</span>
+
+                <span id="studentStatus">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Téléphone</span>
+
+                <span id="studentPhone">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Adresse</span>
+
+                <span id="studentAddress">
+
+                    -
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="student-card">
+
+        <h3>
+
+            Informations du bus
+
+        </h3>
+
+        <div class="info-list">
+
+            <div class="info-item">
+
+                <span>Numéro du bus</span>
+
+                <span id="busId">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Immatriculation</span>
+
+                <span id="busPlate">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Capacité</span>
+
+                <span id="busCapacity">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Places disponibles</span>
+
+                <span id="availableSeats">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span>Dernière mise à jour</span>
+
+                <span id="lastUpdate">
+
+                    -
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section
+    id="notifications"
+    class="student-card fade-in">
+
+    <h3>
+
+        Notifications récentes
+
+    </h3>
+
+    <div
+        id="notificationList"
+        class="notification-list">
+
+        <div class="notification-item">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <div class="notification-content">
+
+                <h4>
+
+                    Aucune notification
+
+                </h4>
+
+                <p>
+
+                    Vous n'avez aucune notification pour le moment.
+
+                </p>
+
+                <span class="notification-time">
+
+                    --
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="student-footer">
+
+    <p>
+
+        <strong>
+
+            UTL StudentBus
+
+        </strong>
+
+        © 2026 - Tous droits réservés.
+
+    </p>
+
+    <p>
+
+        Université Technologique du Lualaba
+
+    </p>
+
+</footer>
+
+</main>
+
+</div>
+
+<div
+    id="toast"
+    class="toast"
+    style="display:none;">
+</div>
+
+<div
+    id="loader"
+    class="loader"
+    style="display:none;">
+
+    <div class="spinner"></div>
+
+    <p>
+
+        Chargement...
+
+    </p>
+
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=VOTRE_CLE_GOOGLE_MAPS&libraries=places"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/utils.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const refreshBtn = document.getElementById("refreshBtn");
+
+    if(refreshBtn){
+
+        refreshBtn.addEventListener("click", () => {
+
+            window.location.reload();
+
+        });
+
+    }
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if(logoutBtn){
+
+        logoutBtn.addEventListener("click", logout);
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

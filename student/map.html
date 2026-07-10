@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Carte | UTL StudentBus</title>
+
+<link rel="stylesheet" href="../css/dashboard.css">
+
+<link rel="manifest" href="../manifest.json">
+
+<meta name="theme-color" content="#1565c0">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+html,
+body{
+
+height:100%;
+margin:0;
+
+}
+
+#map{
+
+position:absolute;
+
+top:65px;
+left:0;
+right:0;
+bottom:80px;
+
+}
+
+/* Informations du bus */
+
+.bus-panel{
+
+position:fixed;
+
+left:15px;
+right:15px;
+bottom:90px;
+
+background:white;
+
+border-radius:18px;
+
+padding:18px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+z-index:100;
+
+}
+
+.bus-panel h2{
+
+margin-bottom:10px;
+
+color:#1565c0;
+
+font-size:20px;
+
+}
+
+.bus-info{
+
+display:flex;
+
+justify-content:space-between;
+
+margin:8px 0;
+
+font-size:15px;
+
+}
+
+.bus-label{
+
+font-weight:bold;
+
+color:#666;
+
+}
+
+.bus-value{
+
+font-weight:bold;
+
+color:#1565c0;
+
+}
+
+/* Boutons flottants */
+
+.floating-buttons{
+
+position:fixed;
+
+right:15px;
+
+bottom:190px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+z-index:100;
+
+}
+
+.fab{
+
+width:55px;
+
+height:55px;
+
+border:none;
+
+border-radius:50%;
+
+background:#1565c0;
+
+color:white;
+
+font-size:22px;
+
+cursor:pointer;
+
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+<div class="header-left">
+
+<div class="menu-btn"
+onclick="toggleSidebar()">
+
+☰
+
+</div>
+
+<img
+src="../image/logo-studentbus.png"
+class="logo">
+
+<div class="app-title">
+
+UTL StudentBus
+
+</div>
+
+</div>
+
+<div class="header-right">
+
+<i class="fa-solid fa-bell notification"></i>
+
+</div>
+
+</header>
+
+<!-- SIDEBAR -->
+
+<div
+class="sidebar"
+id="sidebar">
+
+<div class="sidebar-profile">
+
+<img
+src="image/logo-studentbus.png"
+id="profileImage">
+
+<h2 id="studentName">
+
+Chargement...
+
+</h2>
+
+<p id="studentCard">
+
+Card ID
+
+</p>
+
+<p id="studentBus">
+
+Bus...
+
+</p>
+
+</div>
+
+<div class="sidebar-menu">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Accueil
+
+</a>
+
+<a href="map.html"
+class="active">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+Carte
+
+</a>
+
+<a href="notifications.html">
+
+<i class="fa-solid fa-bell"></i>
+
+Notifications
+
+</a>
+
+<a href="settings.html">
+
+<i class="fa-solid fa-gear"></i>
+
+Paramètres
+
+</a>
+
+<a href="#"
+onclick="logout()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Déconnexion
+
+</a>
+
+</div>
+
+</div>
+
+<div
+id="overlay"
+class="overlay">
+
+</div>
+
+<!-- GOOGLE MAP -->
+
+<div id="map"></div>
+
+<!-- BOUTONS -->
+
+<div class="floating-buttons">
+
+<button
+class="fab"
+onclick="goToMyLocation()">
+
+<i class="fa-solid fa-location-crosshairs"></i>
+
+</button>
+
+<button
+class="fab"
+onclick="toggleSatellite()">
+
+<i class="fa-solid fa-satellite"></i>
+
+</button>
+
+</div>
+
+<!-- INFORMATIONS BUS -->
+
+<div class="bus-panel">
+
+<h2>
+
+🚌 Mon Bus
+
+</h2>
+
+<div class="bus-info">
+
+<span class="bus-label">
+
+Bus
+
+</span>
+
+<span
+class="bus-value"
+id="busName">
+
+...
+
+</span>
+
+</div>
+
+<div class="bus-info">
+
+<span class="bus-label">
+
+Statut
+
+</span>
+
+<span
+class="bus-value"
+id="busStatus">
+
+...
+
+</span>
+
+</div>
+
+<div class="bus-info">
+
+<span class="bus-label">
+
+Vitesse
+
+</span>
+
+<span
+class="bus-value"
+id="busSpeed">
+
+0 km/h
+
+</span>
+
+</div>
+
+<div class="bus-info">
+
+<span class="bus-label">
+
+Dernière mise à jour
+
+</span>
+
+<span
+class="bus-value"
+id="lastUpdate">
+
+...
+
+</span>
+
+</div>
+
+</div>
+<!-- ===========================
+BOTTOM NAVIGATION
+=========================== -->
+
+<nav class="bottom-nav">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Accueil
+
+</a>
+
+<a href="map.html" class="active">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+Carte
+
+</a>
+
+<a href="notifications.html">
+
+<i class="fa-solid fa-bell"></i>
+
+Notifications
+
+</a>
+
+<a href="settings.html">
+
+<i class="fa-solid fa-user"></i>
+
+Profil
+
+</a>
+
+</nav>
+
+<!-- ===========================
+FIREBASE
+=========================== -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script src="../js/map.js"></script>
+
+<!-- ===========================
+GOOGLE MAPS
+=========================== -->
+
+<script src="../js/config.js"></script>
+
+<script>
+checkAuth("student");
+loadProfile();
+
+// Charge Google Maps avec la clé de config.js
+loadGoogleMaps("initMap");
+</script>
+
+<script>
+
+/* ==========================
+Vérification connexion
+========================== */
+
+checkAuth("student");
+
+/* ==========================
+Chargement profil étudiant
+========================== */
+
+loadProfile();
+
+/* ==========================
+Initialisation carte
+========================== */
+
+window.onload = () =>{
+
+    initMap();
+
+};
+
+</script>
