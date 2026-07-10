@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | UTL StudentBus</title>
+
+    <link rel="icon" href="../image/logo.png">
+
+    <link rel="manifest" href="../manifest.json">
+
+    <meta name="theme-color" content="#1565c0">
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-left">
+
+        <div class="menu-btn" onclick="toggleSidebar()">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </div>
+
+        <img src="../image/logo.png" class="logo" alt="Logo">
+
+        <h2 class="app-title">
+
+            UTL StudentBus
+
+        </h2>
+
+    </div>
+
+    <div class="header-right">
+
+        <div class="notification">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <span id="notificationCount"
+                  class="notification-badge">
+
+                0
+
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+<div id="overlay" class="overlay"></div>
+
+<aside id="sidebar" class="sidebar">
+
+    <div class="sidebar-profile">
+
+        <img id="adminAvatar"
+             src="../image/default-avatar.png">
+
+        <h2 id="adminName">
+
+            Administrateur
+
+        </h2>
+
+        <p id="adminEmail">
+
+            admin@utl.cd
+
+        </p>
+
+    </div>
+
+    <nav class="sidebar-menu">
+
+        <a href="dashboard.html" class="active">
+
+            <i class="fa-solid fa-house"></i>
+
+            Tableau de bord
+
+        </a>
+
+        <a href="buses.html">
+
+            <i class="fa-solid fa-bus"></i>
+
+            Bus
+
+        </a>
+
+        <a href="students.html">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            Étudiants
+
+        </a>
+
+        <a href="drivers.html">
+
+            <i class="fa-solid fa-id-card"></i>
+
+            Chauffeurs
+
+        </a>
+
+        <a href="bus-stops.html">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            Arrêts
+
+        </a>
+
+        <a href="routes.html">
+
+            <i class="fa-solid fa-route"></i>
+
+            Itinéraires
+
+        </a>
+
+        <a href="map.html">
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+            Carte
+
+        </a>
+
+        <a href="settings.html">
+
+            <i class="fa-solid fa-gear"></i>
+
+            Paramètres
+
+        </a>
+
+        <a href="#"
+           onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Déconnexion
+
+        </a>
+
+    </nav>
+
+</aside>
+
+<main class="content">
+
+<h2 class="mb-20">
+
+Bienvenue,
+<span id="welcomeName">
+
+Administrateur
+
+</span>
+
+</h2>
+
+<div class="stats">
+
+<div class="stat-card">
+
+<i class="fa-solid fa-user-graduate stat-icon"></i>
+
+<div class="stat-title">
+
+Étudiants
+
+</div>
+
+<div id="studentCount"
+class="stat-value">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-id-card stat-icon"></i>
+
+<div class="stat-title">
+
+Chauffeurs
+
+</div>
+
+<div id="driverCount"
+class="stat-value">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-bus stat-icon"></i>
+
+<div class="stat-title">
+
+Bus
+
+</div>
+
+<div id="busCount"
+class="stat-value">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-location-dot stat-icon"></i>
+
+<div class="stat-title">
+
+Arrêts
+
+</div>
+
+<div id="stopCount"
+class="stat-value">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-route stat-icon"></i>
+
+<div class="stat-title">
+
+Itinéraires
+
+</div>
+
+<div id="routeCount"
+class="stat-value">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-bell stat-icon"></i>
+
+<div class="stat-title">
+
+Notifications
+
+</div>
+
+<div id="notifCount"
+class="stat-value">
+
+0
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3 class="card-title">
+
+Actions rapides
+
+</h3>
+
+<div class="button-group">
+
+<button class="btn btn-primary"
+onclick="location.href='buses.html'">
+
+<i class="fa-solid fa-plus"></i>
+
+Ajouter un bus
+
+</button>
+
+<button class="btn btn-success"
+onclick="location.href='bus-stops.html'">
+
+<i class="fa-solid fa-location-dot"></i>
+
+Ajouter un arrêt
+
+</button>
+
+<button class="btn btn-warning"
+onclick="location.href='routes.html'">
+
+<i class="fa-solid fa-route"></i>
+
+Créer un itinéraire
+
+</button>
+
+<button class="btn btn-secondary"
+onclick="location.href='map.html'">
+
+<i class="fa-solid fa-map"></i>
+
+Voir la carte
+
+</button>
+
+</div>
+
+</div>
+<!-- ==============================
+ACTIVITÉ RÉCENTE
+============================== -->
+
+<div class="grid-2">
+
+<div class="card">
+
+<h3 class="card-title">
+
+<i class="fa-solid fa-clock"></i>
+
+Activité récente
+
+</h3>
+
+<div class="list">
+
+<div class="list-item">
+
+<div>
+
+<strong>Nouvel étudiant inscrit</strong>
+
+<p id="lastStudent">
+
+Chargement...
+
+</p>
+
+</div>
+
+<span class="badge badge-success">
+
+Nouveau
+
+</span>
+
+</div>
+
+<div class="list-item">
+
+<div>
+
+<strong>Bus ajouté</strong>
+
+<p id="lastBus">
+
+Chargement...
+
+</p>
+
+</div>
+
+<span class="badge badge-primary">
+
+Bus
+
+</span>
+
+</div>
+
+<div class="list-item">
+
+<div>
+
+<strong>Nouvel itinéraire</strong>
+
+<p id="lastRoute">
+
+Chargement...
+
+</p>
+
+</div>
+
+<span class="badge badge-warning">
+
+Route
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ==============================
+NOTIFICATIONS
+============================== -->
+
+<div class="card">
+
+<h3 class="card-title">
+
+<i class="fa-solid fa-bell"></i>
+
+Notifications
+
+</h3>
+
+<div class="list" id="notificationList">
+
+<div class="list-item">
+
+Chargement...
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ==============================
+BUS EN SERVICE
+============================== -->
+
+<div class="card">
+
+<div class="flex-between">
+
+<h3 class="card-title">
+
+Bus en circulation
+
+</h3>
+
+<span id="activeBusBadge"
+
+class="badge badge-success">
+
+0
+
+</span>
+
+</div>
+
+<div class="table-container">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Bus</th>
+
+<th>Chauffeur</th>
+
+<th>Statut</th>
+
+</tr>
+
+</thead>
+
+<tbody id="activeBusTable">
+
+<tr>
+
+<td colspan="3"
+
+class="text-center">
+
+Chargement...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ==============================
+APERÇU DE LA CARTE
+============================== -->
+
+<div class="card">
+
+<div class="flex-between">
+
+<h3 class="card-title">
+
+Carte des bus
+
+</h3>
+
+<button
+
+class="btn btn-primary"
+
+onclick="location.href='map.html'">
+
+Ouvrir la carte
+
+</button>
+
+</div>
+
+<div class="map-container">
+
+<div id="dashboardMap">
+
+<p class="text-center mt-20">
+
+La carte Google Maps sera affichée ici.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+<!--=========================================
+ STATISTIQUES AVANCÉES
+==========================================-->
+
+<div class="grid-2">
+
+    <div class="card">
+
+        <h3 class="card-title">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Performance
+
+        </h3>
+
+        <div class="list">
+
+            <div class="list-item">
+
+                <span>Étudiants approuvés</span>
+
+                <span id="approvedStudents"
+
+                class="badge badge-success">
+
+                    0
+
+                </span>
+
+            </div>
+
+            <div class="list-item">
+
+                <span>Bus actifs</span>
+
+                <span id="activeBusCount"
+
+                class="badge badge-primary">
+
+                    0
+
+                </span>
+
+            </div>
+
+            <div class="list-item">
+
+                <span>Chauffeurs disponibles</span>
+
+                <span id="availableDrivers"
+
+                class="badge badge-warning">
+
+                    0
+
+                </span>
+
+            </div>
+
+            <div class="list-item">
+
+                <span>Itinéraires actifs</span>
+
+                <span id="activeRoutes"
+
+                class="badge badge-primary">
+
+                    0
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3 class="card-title">
+
+            <i class="fa-solid fa-users"></i>
+
+            Dernières inscriptions
+
+        </h3>
+
+        <div class="table-container">
+
+            <table class="table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Nom</th>
+
+                        <th>Rôle</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="recentUsers">
+
+                    <tr>
+
+                        <td colspan="2"
+
+                        class="text-center">
+
+                            Chargement...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--=========================================
+ RACCOURCIS ADMIN
+==========================================-->
+
+<div class="card">
+
+    <h3 class="card-title">
+
+        <i class="fa-solid fa-bolt"></i>
+
+        Raccourcis
+
+    </h3>
+
+    <div class="button-group">
+
+        <button
+
+        class="btn btn-primary"
+
+        onclick="location.href='students.html'">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            Étudiants
+
+        </button>
+
+        <button
+
+        class="btn btn-success"
+
+        onclick="location.href='drivers.html'">
+
+            <i class="fa-solid fa-id-card"></i>
+
+            Chauffeurs
+
+        </button>
+
+        <button
+
+        class="btn btn-warning"
+
+        onclick="location.href='routes.html'">
+
+            <i class="fa-solid fa-route"></i>
+
+            Itinéraires
+
+        </button>
+
+        <button
+
+        class="btn btn-secondary"
+
+        onclick="location.href='settings.html'">
+
+            <i class="fa-solid fa-gear"></i>
+
+            Paramètres
+
+        </button>
+
+    </div>
+
+</div>
+<!--=========================================
+ BOTTOM NAVIGATION (MOBILE)
+==========================================-->
+
+<nav class="bottom-nav">
+
+    <a href="dashboard.html" class="active">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Accueil</span>
+
+    </a>
+
+    <a href="map.html">
+
+        <i class="fa-solid fa-map-location-dot"></i>
+
+        <span>Carte</span>
+
+    </a>
+
+    <a href="students.html">
+
+        <i class="fa-solid fa-user-graduate"></i>
+
+        <span>Étudiants</span>
+
+    </a>
+
+    <a href="settings.html">
+
+        <i class="fa-solid fa-gear"></i>
+
+        <span>Réglages</span>
+
+    </a>
+
+</nav>
+
+</main>
+
+<!--=========================================
+ LOADER
+==========================================-->
+
+<div id="loader" class="loader">
+
+    <div class="spinner"></div>
+
+</div>
+
+<!--=========================================
+ FIREBASE
+==========================================-->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<!--=========================================
+ CONFIGURATION
+==========================================-->
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/config.js"></script>
+
+<!--=========================================
+ JAVASCRIPT COMMUN
+==========================================-->
+
+<script src="../js/dashboard.js"></script>
+
+<!--=========================================
+ JAVASCRIPT ADMIN
+==========================================-->
+
+<script src="../js/admin.js"></script>
+
+<!--=========================================
+ INITIALISATION
+==========================================-->
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    if(typeof loadAdminProfile==="function"){
+
+        loadAdminProfile();
+
+    }
+
+    if(typeof loadDashboardStats==="function"){
+
+        loadDashboardStats();
+
+    }
+
+    if(typeof loadNotifications==="function"){
+
+        loadNotifications();
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
