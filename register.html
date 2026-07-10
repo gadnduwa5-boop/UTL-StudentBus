@@ -264,10 +264,7 @@ required>
 </div>
 
 </div>
-<!--=========================================
- INFORMATIONS UNIVERSITAIRES
-==========================================-->
-
+<
 <div class="form-group">
 
 <label>
@@ -727,22 +724,11 @@ style="display:none;">
 <script src="js/firebase-config.js"></script>
 
 <script src="js/config.js"></script>
-
-<!--=========================================
- REGISTER
-==========================================-->
+<script src="js/utils.js"></script>
 
 <script src="js/register.js"></script>
-<!--=========================================
- INITIALISATION
-==========================================-->
 
 <script>
-
-/*=========================================
- AFFICHER / MASQUER LE MOT DE PASSE
-=========================================*/
-
 function togglePassword(inputId,iconId){
 
     const input=document.getElementById(inputId);
@@ -764,40 +750,6 @@ function togglePassword(inputId,iconId){
     }
 
 }
-
-/*=========================================
- INITIALISATION
-=========================================*/
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-    /* Charger les départements */
-
-    if(typeof initializeDepartments==="function"){
-
-        initializeDepartments();
-
-    }
-
-    /* Activer la validation */
-
-    if(typeof initializeRegister==="function"){
-
-        initializeRegister();
-
-    }
-
-    /* Focus automatique */
-
-    const fullName=document.getElementById("fullName");
-
-    if(fullName){
-
-        fullName.focus();
-
-    }
-
-});
 
 </script>
 
