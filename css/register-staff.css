@@ -1,0 +1,153 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#1565c0,#0d47a1);
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:450px;
+    background:#fff;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    animation:fade .5s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.logo img{
+    width:100px;
+}
+
+h2{
+    text-align:center;
+    color:#1565c0;
+    margin-bottom:25px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+    color:#333;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    transition:.3s;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#1565c0;
+    box-shadow:0 0 6px rgba(21,101,192,.25);
+}
+
+button{
+    width:100%;
+    padding:13px;
+    background:#1565c0;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+#message{
+    margin-top:18px;
+    text-align:center;
+    font-weight:bold;
+    min-height:22px;
+}
+
+.success{
+    color:#2e7d32;
+}
+
+.error{
+    color:#d32f2f;
+}
+
+.login{
+    text-align:center;
+    margin-top:20px;
+}
+
+.login a{
+    text-decoration:none;
+    color:#1565c0;
+    font-weight:bold;
+}
+
+.login a:hover{
+    text-decoration:underline;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+.container{
+    padding:20px;
+}
+
+.logo img{
+    width:80px;
+}
+
+h2{
+    font-size:22px;
+}
+
+input,
+select,
+button{
+    font-size:14px;
+}
+
+}

@@ -1,0 +1,913 @@
+/*====================================================
+ UTL STUDENTBUS
+ AUTH.CSS
+====================================================*/
+
+/*==========================
+ RESET
+==========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:"Segoe UI",Arial,sans-serif;
+
+    background:linear-gradient(135deg,#1565c0,#0d47a1);
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#333;
+
+}
+
+/*==========================
+ PAGE
+==========================*/
+
+.login-page{
+
+    width:95%;
+
+    max-width:1200px;
+
+    min-height:700px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+
+}
+
+/*==========================
+ COLONNE GAUCHE
+==========================*/
+
+.login-left{
+
+    background:linear-gradient(135deg,#1565c0,#1e88e5);
+
+    color:white;
+
+    padding:60px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.logo{
+
+    width:90px;
+
+    margin-bottom:20px;
+
+}
+
+.brand h1{
+
+    font-size:38px;
+
+    margin-bottom:15px;
+
+}
+
+.brand p{
+
+    font-size:18px;
+
+    opacity:.95;
+
+    line-height:1.7;
+
+}
+
+/*==========================
+ FONCTIONNALITÉS
+==========================*/
+
+.features{
+
+    margin-top:50px;
+
+}
+
+.feature{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:22px;
+
+    font-size:18px;
+
+}
+
+.feature i{
+
+    font-size:24px;
+
+}
+/*==========================
+ COLONNE DROITE
+==========================*/
+
+.login-right{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:50px;
+
+    background:#fafafa;
+
+}
+
+.login-card{
+
+    width:100%;
+
+    max-width:430px;
+
+}
+
+.login-card h2{
+
+    font-size:34px;
+
+    color:#1565c0;
+
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    color:#777;
+
+    margin-bottom:35px;
+
+}
+
+/*==========================
+ FORMULAIRE
+==========================*/
+
+.form-group{
+
+    margin-bottom:22px;
+
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#444;
+
+}
+
+.input-box{
+
+    position:relative;
+
+}
+
+.input-box i:first-child{
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#1565c0;
+
+}
+
+.input-box input{
+
+    width:100%;
+
+    height:52px;
+
+    border:2px solid #e5e5e5;
+
+    border-radius:12px;
+
+    padding:0 50px;
+
+    font-size:16px;
+
+    transition:.3s;
+
+    outline:none;
+
+    background:#fff;
+
+}
+
+.input-box input:focus{
+
+    border-color:#1565c0;
+
+    box-shadow:0 0 0 4px rgba(21,101,192,.15);
+
+}
+
+/*==========================
+ AFFICHER LE MOT DE PASSE
+==========================*/
+
+.toggle-password{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    color:#666;
+
+    font-size:18px;
+
+}
+
+/*==========================
+ OPTIONS
+==========================*/
+
+.form-options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.remember-me{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:14px;
+
+}
+
+.forgot-link{
+
+    text-decoration:none;
+
+    color:#1565c0;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.forgot-link:hover{
+
+    text-decoration:underline;
+
+}
+
+/*==========================
+ BOUTON CONNEXION
+==========================*/
+
+.login-btn{
+
+    width:100%;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1565c0;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    background:#0d47a1;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 25px rgba(21,101,192,.35);
+
+}
+
+.button-loader{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+/*==========================
+ SÉPARATEUR
+==========================*/
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    margin:30px 0;
+
+    color:#999;
+
+}
+
+.divider::before,
+
+.divider::after{
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:#ddd;
+
+}
+
+.divider span{
+
+    padding:0 15px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+/*==========================
+ CARTES D'INSCRIPTION
+==========================*/
+
+.register-links{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.register-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:15px;
+
+    border:2px solid #e5e5e5;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    color:#333;
+
+    transition:.3s;
+
+    background:#fff;
+
+}
+
+.register-card:hover{
+
+    border-color:#1565c0;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 20px rgba(0,0,0,.10);
+
+}
+
+.register-card i{
+
+    font-size:28px;
+
+    color:#1565c0;
+
+}
+
+.register-card strong{
+
+    display:block;
+
+    margin-bottom:4px;
+
+}
+
+.register-card small{
+
+    color:#777;
+
+}
+
+/*==========================
+ PIED DE PAGE
+==========================*/
+
+.login-footer{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+/*==========================
+ LOADER
+==========================*/
+
+.loader{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(255,255,255,.85);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.spinner{
+
+    width:55px;
+
+    height:55px;
+
+    border:5px solid #ddd;
+
+    border-top:5px solid #1565c0;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+
+    margin-bottom:15px;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/*==========================
+ TOAST
+==========================*/
+
+.toast{
+
+    position:fixed;
+
+    bottom:30px;
+
+    right:30px;
+
+    background:#1565c0;
+
+    color:#fff;
+
+    padding:15px 20px;
+
+    border-radius:10px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+    display:none;
+
+    z-index:10000;
+
+    animation:fadeIn .3s ease;
+
+}
+
+.toast.success{
+
+    background:#2e7d32;
+
+}
+
+.toast.error{
+
+    background:#c62828;
+
+}
+
+.toast.warning{
+
+    background:#ef6c00;
+
+}
+
+/*==========================
+ ANIMATIONS
+==========================*/
+
+.login-card{
+
+    animation:slideUp .6s ease;
+
+}
+
+@keyframes slideUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.brand{
+
+    animation:fadeLeft .8s ease;
+
+}
+
+@keyframes fadeLeft{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(-40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+/*====================================================
+ RESPONSIVE TABLETTE
+====================================================*/
+
+@media(max-width:992px){
+
+.login-page{
+
+grid-template-columns:1fr;
+
+max-width:650px;
+
+}
+
+.login-left{
+
+display:none;
+
+}
+
+.login-right{
+
+padding:40px;
+
+}
+
+}
+
+/*====================================================
+ RESPONSIVE MOBILE
+====================================================*/
+
+@media(max-width:576px){
+
+body{
+
+padding:15px;
+
+}
+
+.login-page{
+
+width:100%;
+
+min-height:auto;
+
+border-radius:15px;
+
+}
+
+.login-right{
+
+padding:25px;
+
+}
+
+.login-card h2{
+
+font-size:28px;
+
+}
+
+.subtitle{
+
+font-size:15px;
+
+}
+
+.input-box input{
+
+height:48px;
+
+font-size:15px;
+
+}
+
+.login-btn{
+
+height:48px;
+
+font-size:15px;
+
+}
+
+.form-options{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:12px;
+
+}
+
+.register-card{
+
+padding:12px;
+
+}
+
+.register-card i{
+
+font-size:24px;
+
+}
+
+.logo{
+
+width:70px;
+
+}
+
+}
+
+/*====================================================
+ ACCESSIBILITÉ
+====================================================*/
+
+button,
+
+a,
+
+input,
+
+select{
+
+transition:all .3s ease;
+
+}
+
+button:focus,
+
+input:focus,
+
+select:focus{
+
+outline:none;
+
+}
+
+/*====================================================
+ DÉSACTIVÉ
+====================================================*/
+
+.login-btn:disabled{
+
+opacity:.6;
+
+cursor:not-allowed;
+
+transform:none;
+
+box-shadow:none;
+
+}
+
+/*====================================================
+ SCROLLBAR
+====================================================*/
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#1565c0;
+
+border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#eeeeee;
+
+}
+
+/*====================================================
+ SÉLECTION
+====================================================*/
+
+::selection{
+
+background:#1565c0;
+
+color:#ffffff;
+
+}
+
+/*====================================================
+ MODE SOMBRE (Préparation)
+====================================================*/
+
+body.dark{
+
+background:#121212;
+
+}
+
+body.dark .login-page{
+
+background:#1f1f1f;
+
+}
+
+body.dark .login-right{
+
+background:#1f1f1f;
+
+}
+
+body.dark .login-card{
+
+color:#ffffff;
+
+}
+
+body.dark .input-box input{
+
+background:#2c2c2c;
+
+color:#ffffff;
+
+border-color:#444;
+
+}
+
+body.dark .register-card{
+
+background:#2c2c2c;
+
+border-color:#444;
+
+color:#ffffff;
+
+}
+
+body.dark .divider{
+
+color:#cccccc;
+
+}
