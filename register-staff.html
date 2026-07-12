@@ -4,12 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-
-<meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -503,16 +497,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     </p>
 
 </div>
-
 <div
     id="toast"
     class="toast"
     style="display:none;">
 
 </div>
-<!--=========================================
- FIREBASE
-==========================================-->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 
@@ -521,174 +511,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script src="js/firebase-config.js"></script>
+
 
 <script src="js/config.js"></script>
-
-<script src="js/register-staff.js"></script>
-
-</body>
-
-</html>
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Inscription Personnel</title>
-
-<link rel="stylesheet"
-href="css/register-staff.css">
-
-</head>
-
-<body>
-
-<div class="container">
-
-<div style="text-align: center;">
-    <img src="image/logo.png" alt="UTL student
-    Bus" width="180">
-</div>
-
-<h2>Inscription Personnel</h2>
-
-<div class="form">
-
-<div class="input-group">
-
-<label>Nom complet</label>
-
-<input
-type="text"
-id="fullname"
-placeholder="Nom complet">
-
-</div>
-
-<div class="input-group">
-
-<label>Email</label>
-
-<input
-type="email"
-id="email"
-placeholder="Email">
-
-</div>
-
-<div class="input-group">
-
-<div class="input-group">
-
-<label>Numéro de téléphone</label>
-
-<input
-type="tel"
-id="phone"
-placeholder="+243 9XXXXXXXX">
-
-</div>
-
-<div class="input-group">
-
-<label>Numéro de carte</label>
-
-<input
-type="text"
-id="cardId"
-placeholder="Ex : ADM0001 ou DRV0001">
-
-</div>
-
-<label>Mot de passe</label>
-
-<input
-type="password"
-id="password"
-placeholder="Mot de passe">
-
-</div>
-
-<div class="input-group">
-
-<label>Confirmer le mot de passe</label>
-
-<input
-type="password"
-id="confirmPassword"
-placeholder="Confirmer le mot de passe">
-
-</div>
-
-<div class="input-group">
-
-<label>Rôle</label>
-
-<select id="role">
-
-<option value="">Choisir...</option>
-
-<option value="admin">
-
-Administrateur
-
-</option>
-
-<option value="chauffeur">
-
-Chauffeur
-
-</option>
-
-</select>
-
-</div>
-
-<div class="input-group">
-
-<label>Code d'invitation</label>
-
-<input
-type="text"
-id="inviteCode"
-placeholder="Ex : ADMIN2026UTL">
-
-</div>
-
-<button
-id="registerBtn">
-
-Créer le compte
-</button>
-
-<p
-id="message">
-
-</p>
-
-<p class="login">
-
-Déjà inscrit ?
-
-<a href="login.html">
-
-Se connecter
-
-</a>
-
-</p>
-
-</div>
-
-</div>
-
-<!-- Firebase -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-<script src="js/firebase-config.js"></script>
 
 <script src="js/register-staff.js"></script>
 
