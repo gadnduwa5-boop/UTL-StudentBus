@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Étudiant | UTL StudentBus</title>
+
+<link rel="icon" href="../image/logo.png">
+
+<link rel="manifest" href="../manifest.json">
+
+<meta name="theme-color" content="#1565c0">
+
+<link rel="stylesheet" href="../css/dashboard.css">
+
+<link rel="stylesheet" href="../css/student.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div id="overlay"
+class="overlay"
+onclick="toggleSidebar()"></div>
+
+<div class="dashboard">
+
+<aside id="sidebar"
+class="sidebar">
+
+<div class="sidebar-header">
+
+<img
+src="../image/logo.png"
+class="logo"
+alt="UTL StudentBus">
+
+<h2>
+
+UTL StudentBus
+
+</h2>
+
+</div>
+
+<div class="sidebar-profile">
+
+<img
+id="studentPhoto"
+src="../image/avatar.png"
+alt="Photo">
+
+<h3 id="profileName">
+
+Chargement...
+
+</h3>
+
+<p>
+
+Carte :
+
+<span id="profileCardId">
+
+-
+
+</span>
+
+</p>
+
+</div>
+
+<nav class="sidebar-menu">
+
+<a href="dashboard.html"
+class="active">
+
+<i class="fa-solid fa-house"></i>
+
+<span>
+
+Accueil
+
+</span>
+
+</a>
+
+<a href="#myBus">
+
+<i class="fa-solid fa-bus"></i>
+
+<span>
+
+Mon bus
+
+</span>
+
+</a>
+
+<a href="#studentMap">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+<span>
+
+Carte GPS
+
+</span>
+
+</a>
+
+<a href="#notifications">
+
+<i class="fa-solid fa-bell"></i>
+
+<span>
+
+Notifications
+
+</span>
+
+</a>
+
+<a href="#profile">
+
+<i class="fa-solid fa-user"></i>
+
+<span>
+
+Mon profil
+
+</span>
+
+</a>
+
+<a href="#"
+id="logoutBtn">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>
+
+Déconnexion
+
+</span>
+
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<button
+class="menu-btn"
+onclick="toggleSidebar()">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
+<div>
+
+<h1>
+
+Bienvenue,
+
+<span id="studentName">
+
+Étudiant
+
+</span>
+
+</h1>
+
+<p>
+
+Suivez votre bus en temps réel.
+
+</p>
+
+</div>
+
+<div class="topbar-actions">
+
+<button
+id="refreshBtn"
+class="action-btn">
+
+<i class="fa-solid fa-rotate"></i>
+
+</button>
+
+</div>
+
+</header>
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-bus"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="studentBus">
+
+-
+
+</h2>
+
+<p>
+
+Mon bus
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-location-dot"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="nextStop">
+
+-
+
+</h2>
+
+<p>
+
+Prochain arrêt
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-clock"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="arrivalTime">
+
+--
+
+:--
+
+</h2>
+
+<p>
+
+Arrivée estimée
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-bell"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="notificationCount">
+
+0
+
+</h2>
+
+<p>
+
+Notifications
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card" id="myBus">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-bus"></i>
+
+Mon bus
+
+</h3>
+
+<span id="busStatus"
+
+class="badge badge-success">
+
+Actif
+
+</span>
+
+</div>
+
+<div class="admin-grid">
+
+<div class="info-list">
+
+<div class="info-item">
+
+<span>
+
+Numéro du bus
+
+</span>
+
+<strong id="busNumber">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Chauffeur
+
+</span>
+
+<strong id="driverName">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Téléphone du chauffeur
+
+</span>
+
+<strong id="driverPhone">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Capacité
+
+</span>
+
+<strong id="busCapacity">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Places disponibles
+
+</span>
+
+<strong id="availableSeats">
+
+-
+
+</strong>
+
+</div>
+
+</div>
+
+<div class="quick-actions">
+
+<button
+
+class="quick-btn"
+
+onclick="location.href='map.html'">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+Voir la carte
+
+</button>
+
+<button
+
+class="quick-btn"
+
+id="contactDriverBtn">
+
+<i class="fa-solid fa-phone"></i>
+
+Contacter le chauffeur
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+<section class="card" id="studentMap">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+Suivi GPS du bus
+
+</h3>
+
+<span id="gpsStatus"
+
+class="badge badge-success">
+
+En ligne
+
+</span>
+
+</div>
+
+<div id="map"
+
+class="dashboard-map">
+
+</div>
+
+<div class="quick-actions">
+
+<button
+
+class="quick-btn"
+
+id="centerMapBtn">
+
+<i class="fa-solid fa-location-crosshairs"></i>
+
+Ma position
+
+</button>
+
+<button
+
+class="quick-btn"
+
+id="followBusBtn">
+
+<i class="fa-solid fa-bus"></i>
+
+Suivre le bus
+
+</button>
+
+<button
+
+class="quick-btn"
+
+id="refreshMapBtn">
+
+<i class="fa-solid fa-rotate"></i>
+
+Actualiser
+
+</button>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-route"></i>
+
+Itinéraire du bus
+
+</h3>
+
+</div>
+
+<div class="table-container">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Ordre</th>
+
+<th>Arrêt</th>
+
+<th>Heure prévue</th>
+
+<th>État</th>
+
+</tr>
+
+</thead>
+
+<tbody id="stopsTable">
+
+<tr>
+
+<td colspan="4"
+
+class="text-center">
+
+Chargement des arrêts...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-location-dot"></i>
+
+Prochain arrêt
+
+</h3>
+
+</div>
+
+<div class="activity-list">
+
+<div class="activity-item">
+
+<i class="fa-solid fa-bus"></i>
+
+<div>
+
+<strong id="nextStopName">
+
+Chargement...
+
+</strong>
+
+<p id="nextStopDescription">
+
+Recherche du prochain arrêt...
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<section class="admin-grid" id="notifications">
+
+<div class="card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-bell"></i>
+
+Notifications
+
+</h3>
+
+<span id="notificationBadge"
+
+class="badge badge-danger">
+
+0
+
+</span>
+
+</div>
+
+<div id="notificationList"
+
+class="notification-list">
+
+<div class="notification-item">
+
+<i class="fa-solid fa-spinner fa-spin"></i>
+
+<div>
+
+<strong>
+
+Chargement...
+
+</strong>
+
+<p>
+
+Récupération des notifications.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Historique des trajets
+
+</h3>
+
+</div>
+
+<div class="table-container">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+
+<th>Bus</th>
+
+<th>Départ</th>
+
+<th>Arrivée</th>
+
+<th>Statut</th>
+
+</tr>
+
+</thead>
+
+<tbody id="historyTable">
+
+<tr>
+
+<td colspan="5"
+
+class="text-center">
+
+Aucun trajet enregistré.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-bolt"></i>
+
+Actions rapides
+
+</h3>
+
+</div>
+
+<div class="quick-actions">
+
+<button
+
+class="quick-btn"
+
+onclick="location.href='profile.html'">
+
+<i class="fa-solid fa-user"></i>
+
+Mon profil
+
+</button>
+
+<button
+
+class="quick-btn"
+
+onclick="location.href='settings.html'">
+
+<i class="fa-solid fa-gear"></i>
+
+Paramètres
+
+</button>
+
+<button
+
+class="quick-btn"
+
+id="callDriverBtn">
+
+<i class="fa-solid fa-phone"></i>
+
+Appeler le chauffeur
+
+</button>
+
+<button
+
+class="quick-btn"
+
+onclick="location.href='history.html'">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Historique
+
+</button>
+
+</div>
+
+</section>
+
+<section class="card" id="profile">
+
+<div class="card-header">
+
+<h3>
+
+<i class="fa-solid fa-user-graduate"></i>
+
+Mon profil
+
+</h3>
+
+</div>
+
+<div class="admin-grid">
+
+<div class="info-list">
+
+<div class="info-item">
+
+<span>Nom</span>
+
+<strong id="profileFullName">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Carte étudiant</span>
+
+<strong id="profileCardId">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Faculté</span>
+
+<strong id="profileFaculty">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Département</span>
+
+<strong id="profileDepartment">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Promotion</span>
+
+<strong id="profilePromotion">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Téléphone</span>
+
+<strong id="profilePhone">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Email</span>
+
+<strong id="profileEmail">
+
+-
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<footer class="dashboard-footer">
+
+<p>
+
+<strong>
+
+UTL StudentBus
+
+</strong>
+
+© 2026 - Tous droits réservés.
+
+</p>
+
+<p>
+
+Université Technologique du Lualaba
+
+</p>
+
+</footer>
+
+</main>
+
+</div>
+
+<div
+
+id="toast"
+
+class="toast"
+
+style="display:none;">
+
+</div>
+
+<div
+
+id="loader"
+
+class="loader"
+
+style="display:none;">
+
+<div class="spinner"></div>
+
+<p>
+
+Chargement...
+
+</p>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzKSRiCHiFLv6DTGlnctN20QXHr3NR-NM&libraries=geometry"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/utils.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script src="../js/students.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (typeof loadStudentProfile === "function") {
+
+        loadStudentProfile();
+
+    }
+
+    if (typeof loadStudentBus === "function") {
+
+        loadStudentBus();
+
+    }
+
+    if (typeof loadNotifications === "function") {
+
+        loadNotifications();
+
+    }
+
+    if (typeof initializeMap === "function") {
+
+        initializeMap();
+
+    }
+
+    document
+
+    .getElementById("refreshBtn")
+
+    ?.addEventListener("click", () => {
+
+        if (typeof refreshDashboard === "function") {
+
+            refreshDashboard();
+
+        }
+
+    });
+
+    document
+
+    .getElementById("refreshMapBtn")
+
+    ?.addEventListener("click", () => {
+
+        if (typeof refreshMap === "function") {
+
+            refreshMap();
+
+        }
+
+    });
+
+    document
+
+    .getElementById("followBusBtn")
+
+    ?.addEventListener("click", () => {
+
+        if (typeof followBus === "function") {
+
+            followBus();
+
+        }
+
+    });
+
+    document
+
+    .getElementById("centerMapBtn")
+
+    ?.addEventListener("click", () => {
+
+        if (typeof centerOnStudent === "function") {
+
+            centerOnStudent();
+
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>
