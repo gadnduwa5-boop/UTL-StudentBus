@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Gestion des bus | UTL StudentBus</title>
+
+<link rel="icon" href="../image/logo.png">
+
+<link rel="manifest" href="../manifest.json">
+
+<meta name="theme-color" content="#1565c0">
+
+<link rel="stylesheet" href="../css/dashboard.css">
+
+<link rel="stylesheet" href="../css/admin.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div id="overlay"
+class="overlay"
+onclick="toggleSidebar()"></div>
+
+<div class="dashboard">
+
+<aside id="sidebar"
+class="sidebar">
+
+<div class="sidebar-header">
+
+<img src="../image/logo.png"
+class="logo">
+
+<h2>
+
+UTL StudentBus
+
+</h2>
+
+</div>
+
+<div class="sidebar-profile">
+
+<img id="adminPhoto"
+src="../image/avatar.png">
+
+<h3 id="profileName">
+
+Chargement...
+
+</h3>
+
+<p>
+
+Carte :
+
+<span id="profileCardId">
+
+-
+
+</span>
+
+</p>
+
+</div>
+
+<nav class="sidebar-menu">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>
+
+Dashboard
+
+</span>
+
+</a>
+
+<a href="students.html">
+
+<i class="fa-solid fa-user-graduate"></i>
+
+<span>
+
+Étudiants
+
+</span>
+
+</a>
+
+<a href="drivers.html">
+
+<i class="fa-solid fa-id-card"></i>
+
+<span>
+
+Chauffeurs
+
+</span>
+
+</a>
+
+<a href="buses.html"
+class="active">
+
+<i class="fa-solid fa-bus"></i>
+
+<span>
+
+Bus
+
+</span>
+
+</a>
+
+<a href="routes.html">
+
+<i class="fa-solid fa-route"></i>
+
+<span>
+
+Itinéraires
+
+</span>
+
+</a>
+
+<a href="settings.html">
+
+<i class="fa-solid fa-gear"></i>
+
+<span>
+
+Paramètres
+
+</span>
+
+</a>
+
+<a href="#"
+id="logoutBtn">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>
+
+Déconnexion
+
+</span>
+
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<button
+class="menu-btn"
+onclick="toggleSidebar()">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
+<div>
+
+<h1>
+
+Gestion des bus
+
+</h1>
+
+<p>
+
+Administration UTL StudentBus
+
+</p>
+
+</div>
+
+<div class="topbar-actions">
+
+<button
+id="refreshBtn"
+class="action-btn">
+
+<i class="fa-solid fa-rotate"></i>
+
+</button>
+
+</div>
+
+</header>
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-bus"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="totalBuses">
+
+0
+
+</h2>
+
+<p>
+
+Bus enregistrés
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="activeBuses">
+
+0
+
+</h2>
+
+<p>
+
+Bus actifs
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-screwdriver-wrench"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="maintenanceBuses">
+
+0
+
+</h2>
+
+<p>
+
+En maintenance
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-chair"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="availableSeats">
+
+0
+
+</h2>
+
+<p>
+
+Places disponibles
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<div class="card-header">
+
+<h3>
+
+Gestion des bus
+
+</h3>
+
+</div>
+
+<div class="quick-actions">
+
+<input
+
+type="text"
+
+id="searchBus"
+
+class="search-input"
+
+placeholder="Rechercher un bus...">
+
+<select id="statusFilter">
+
+<option value="">
+
+Tous les statuts
+
+</option>
+
+<option value="active">
+
+Actif
+
+</option>
+
+<option value="maintenance">
+
+Maintenance
+
+</option>
+
+<option value="inactive">
+
+Hors service
+
+</option>
+
+</select>
+
+<button
+
+id="addBusBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-plus"></i>
+
+Ajouter un bus
+
+</button>
+
+<button
+
+id="refreshBuses"
+
+class="quick-btn">
+
+<i class="fa-solid fa-rotate"></i>
+
+Actualiser
+
+</button>
+
+</div>
+
+</section>
+<section class="card">
+
+<div class="table-container">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Bus</th>
+
+<th>Chauffeur</th>
+
+<th>Capacité</th>
+
+<th>Places libres</th>
+
+<th>Étudiants</th>
+
+<th>Statut</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="busesTable">
+
+<tr>
+
+<td colspan="7" class="text-center">
+
+Chargement des bus...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="admin-grid">
+
+<div class="card">
+
+<h3>
+
+Informations du bus
+
+</h3>
+
+<div class="info-list">
+
+<div class="info-item">
+
+<span>
+
+Bus
+
+</span>
+
+<strong id="busNumber">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Chauffeur
+
+</span>
+
+<strong id="driverName">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Capacité
+
+</span>
+
+<strong id="busCapacity">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Places disponibles
+
+</span>
+
+<strong id="busAvailableSeats">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Étudiants inscrits
+
+</span>
+
+<strong id="busStudents">
+
+0
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>
+
+Statut
+
+</span>
+
+<strong id="busStatus">
+
+-
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>
+
+Actions administrateur
+
+</h3>
+
+<div class="quick-actions">
+
+<button
+
+id="assignDriverBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-id-card"></i>
+
+Attribuer un chauffeur
+
+</button>
+
+<button
+
+id="editBusBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-pen"></i>
+
+Modifier
+
+</button>
+
+<button
+
+id="deleteBusBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-trash"></i>
+
+Supprimer
+
+</button>
+
+<button
+
+id="viewStudentsBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-user-graduate"></i>
+
+Voir les étudiants
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+<section class="card">
+
+<h3>
+
+Ajouter / Modifier un bus
+
+</h3>
+
+<form id="busForm">
+
+<div class="admin-grid">
+
+<div>
+
+<label>
+
+Identifiant du bus
+
+</label>
+
+<input
+
+type="text"
+
+id="busId"
+
+class="search-input"
+
+placeholder="Ex : BUS001"
+
+required>
+
+</div>
+
+<div>
+
+<label>
+
+Numéro du bus
+
+</label>
+
+<input
+
+type="text"
+
+id="busNumberInput"
+
+class="search-input"
+
+placeholder="Ex : BUS-001"
+
+required>
+
+</div>
+
+<div>
+
+<label>
+
+Capacité
+
+</label>
+
+<input
+
+type="number"
+
+id="busCapacityInput"
+
+class="search-input"
+
+min="1"
+
+required>
+
+</div>
+
+<div>
+
+<label>
+
+Places disponibles
+
+</label>
+
+<input
+
+type="number"
+
+id="availableSeatsInput"
+
+class="search-input"
+
+min="0"
+
+required>
+
+</div>
+
+<div>
+
+<label>
+
+Statut
+
+</label>
+
+<select id="busStatusInput">
+
+<option value="active">
+
+Actif
+
+</option>
+
+<option value="maintenance">
+
+Maintenance
+
+</option>
+
+<option value="inactive">
+
+Hors service
+
+</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>
+
+Prochain arrêt
+
+</label>
+
+<input
+
+type="text"
+
+id="nextStopInput"
+
+class="search-input"
+
+placeholder="Nom de l'arrêt">
+
+</div>
+
+</div>
+
+<div class="quick-actions">
+
+<button
+
+type="submit"
+
+class="quick-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Enregistrer
+
+</button>
+
+<button
+
+type="reset"
+
+class="quick-btn">
+
+<i class="fa-solid fa-rotate-left"></i>
+
+Réinitialiser
+
+</button>
+
+</div>
+
+</form>
+
+</section>
+
+<section class="card">
+
+<h3>
+
+Attribuer un chauffeur
+
+</h3>
+
+<div class="info-list">
+
+<div class="info-item">
+
+<label for="driverSelect">
+
+Chauffeur
+
+</label>
+
+<select id="driverSelect">
+
+<option value="">
+
+Sélectionner un chauffeur
+
+</option>
+
+</select>
+
+</div>
+
+<div class="quick-actions">
+
+<button
+
+id="saveDriverBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-id-card"></i>
+
+Attribuer
+
+</button>
+
+<button
+
+id="cancelDriverBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-xmark"></i>
+
+Annuler
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+<footer class="dashboard-footer">
+
+<p>
+
+<strong>
+
+UTL StudentBus
+
+</strong>
+
+© 2026 - Tous droits réservés.
+
+</p>
+
+<p>
+
+Université Technologique du Lualaba
+
+</p>
+
+</footer>
+
+</main>
+
+</div>
+
+<div
+
+id="toast"
+
+class="toast"
+
+style="display:none;">
+
+</div>
+
+<div
+
+id="loader"
+
+class="loader"
+
+style="display:none;">
+
+<div class="spinner"></div>
+
+<p>
+
+Chargement...
+
+</p>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/utils.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script src="../js/admin.js"></script>
+
+<script src="../js/buses.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const refreshBtn = document.getElementById("refreshBtn");
+
+    if (refreshBtn) {
+
+        refreshBtn.addEventListener("click", () => {
+
+            if (typeof loadBuses === "function") {
+
+                loadBuses();
+
+            }
+
+        });
+
+    }
+
+    const searchBus = document.getElementById("searchBus");
+
+    if (searchBus) {
+
+        searchBus.addEventListener("input", () => {
+
+            if (typeof filterBuses === "function") {
+
+                filterBuses();
+
+            }
+
+        });
+
+    }
+
+    const statusFilter = document.getElementById("statusFilter");
+
+    if (statusFilter) {
+
+        statusFilter.addEventListener("change", () => {
+
+            if (typeof filterBuses === "function") {
+
+                filterBuses();
+
+            }
+
+        });
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
