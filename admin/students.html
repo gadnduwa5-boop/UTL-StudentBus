@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Gestion des étudiants | UTL StudentBus</title>
+
+<link rel="icon" href="../image/logo.png">
+
+<link rel="manifest" href="../manifest.json">
+
+<meta name="theme-color" content="#1565c0">
+
+<link rel="stylesheet" href="../css/dashboard.css">
+
+<link rel="stylesheet" href="../css/admin.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+<div class="dashboard">
+
+<aside id="sidebar" class="sidebar">
+
+<div class="sidebar-header">
+
+<img src="../image/logo.png" class="logo">
+
+<h2>UTL StudentBus</h2>
+
+</div>
+
+<div class="sidebar-profile">
+
+<img id="adminPhoto"
+
+src="../image/avatar.png">
+
+<h3 id="profileName">
+
+Chargement...
+
+</h3>
+
+<p>
+
+Carte :
+
+<span id="profileCardId">
+
+-
+
+</span>
+
+</p>
+
+</div>
+
+<nav class="sidebar-menu">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Dashboard</span>
+
+</a>
+
+<a href="students.html" class="active">
+
+<i class="fa-solid fa-user-graduate"></i>
+
+<span>Étudiants</span>
+
+</a>
+
+<a href="drivers.html">
+
+<i class="fa-solid fa-id-card"></i>
+
+<span>Chauffeurs</span>
+
+</a>
+
+<a href="buses.html">
+
+<i class="fa-solid fa-bus"></i>
+
+<span>Bus</span>
+
+</a>
+
+<a href="routes.html">
+
+<i class="fa-solid fa-route"></i>
+
+<span>Itinéraires</span>
+
+</a>
+
+<a href="settings.html">
+
+<i class="fa-solid fa-gear"></i>
+
+<span>Paramètres</span>
+
+</a>
+
+<a href="#" id="logoutBtn">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>Déconnexion</span>
+
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<button
+
+class="menu-btn"
+
+onclick="toggleSidebar()">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
+<div>
+
+<h1>
+
+Gestion des étudiants
+
+</h1>
+
+<p>
+
+Administration UTL StudentBus
+
+</p>
+
+</div>
+
+<div class="topbar-actions">
+
+<button
+
+id="refreshBtn"
+
+class="action-btn">
+
+<i class="fa-solid fa-rotate"></i>
+
+</button>
+
+</div>
+
+</header>
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-graduate"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="totalStudents">
+
+0
+
+</h2>
+
+<p>
+
+Étudiants
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-clock"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="pendingStudents">
+
+0
+
+</h2>
+
+<p>
+
+En attente
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="approvedStudents">
+
+0
+
+</h2>
+
+<p>
+
+Approuvés
+
+</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-circle-xmark"></i>
+
+</div>
+
+<div class="stat-info">
+
+<h2 id="rejectedStudents">
+
+0
+
+</h2>
+
+<p>
+
+Refusés
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<div class="card-header">
+
+<h3>
+
+Liste des étudiants
+
+</h3>
+
+</div>
+
+<div class="quick-actions">
+
+<input
+
+type="text"
+
+id="searchStudent"
+
+placeholder="Rechercher un étudiant..."
+
+class="search-input">
+
+<select id="statusFilter">
+
+<option value="">
+
+Tous les statuts
+
+</option>
+
+<option value="pending">
+
+En attente
+
+</option>
+
+<option value="approved">
+
+Approuvés
+
+</option>
+
+<option value="rejected">
+
+Refusés
+
+</option>
+
+</select>
+
+<select id="facultyFilter">
+
+<option value="">
+
+Toutes les facultés
+
+</option>
+
+</select>
+
+<button
+
+id="refreshStudents"
+
+class="quick-btn">
+
+<i class="fa-solid fa-rotate"></i>
+
+Actualiser
+
+</button>
+
+</div>
+
+</section>
+<section class="card">
+
+<div class="table-container">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+
+<th>Carte</th>
+
+<th>Nom</th>
+
+<th>Faculté</th>
+
+<th>Département</th>
+
+<th>Promotion</th>
+
+<th>Bus</th>
+
+<th>Statut</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="studentsTable">
+
+<tr>
+
+<td colspan="9" class="text-center">
+
+Chargement des étudiants...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="admin-grid">
+
+<div class="card">
+
+<h3>
+
+Informations de l'étudiant
+
+</h3>
+
+<div class="info-list">
+
+<div class="info-item">
+
+<span>Nom complet</span>
+
+<strong id="studentFullName">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Numéro de carte</span>
+
+<strong id="studentCardId">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Téléphone</span>
+
+<strong id="studentPhone">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Email</span>
+
+<strong id="studentEmail">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Faculté</span>
+
+<strong id="studentFaculty">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Département</span>
+
+<strong id="studentDepartment">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Promotion</span>
+
+<strong id="studentPromotion">
+
+-
+
+</strong>
+
+</div>
+
+<div class="info-item">
+
+<span>Bus attribué</span>
+
+<strong id="studentBus">
+
+-
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>
+
+Actions administrateur
+
+</h3>
+
+<div class="quick-actions">
+
+<button
+
+id="approveStudentBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-circle-check"></i>
+
+Approuver
+
+</button>
+
+<button
+
+id="rejectStudentBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-circle-xmark"></i>
+
+Refuser
+
+</button>
+
+<button
+
+id="assignBusBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-bus"></i>
+
+Attribuer un bus
+
+</button>
+
+<button
+
+id="editStudentBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-pen"></i>
+
+Modifier
+
+</button>
+
+<button
+
+id="deleteStudentBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-trash"></i>
+
+Supprimer
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+<section class="card">
+
+<h3>
+
+Attribuer un bus
+
+</h3>
+
+<div class="info-list">
+
+<div class="info-item">
+
+<label for="busSelect">
+
+Sélectionner un bus
+
+</label>
+
+<select id="busSelect">
+
+<option value="">
+
+Choisir un bus
+
+</option>
+
+</select>
+
+</div>
+
+<div class="quick-actions">
+
+<button
+
+id="saveBusAssignmentBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Enregistrer
+
+</button>
+
+<button
+
+id="cancelBusAssignmentBtn"
+
+class="quick-btn">
+
+<i class="fa-solid fa-xmark"></i>
+
+Annuler
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>
+
+Modifier l'étudiant
+
+</h3>
+
+<form id="editStudentForm">
+
+<div class="admin-grid">
+
+<div>
+
+<label>
+
+Nom complet
+
+</label>
+
+<input
+
+type="text"
+
+id="editFullName"
+
+class="search-input">
+
+</div>
+
+<div>
+
+<label>
+
+Téléphone
+
+</label>
+
+<input
+
+type="text"
+
+id="editPhone"
+
+class="search-input">
+
+</div>
+
+<div>
+
+<label>
+
+Faculté
+
+</label>
+
+<input
+
+type="text"
+
+id="editFaculty"
+
+class="search-input">
+
+</div>
+
+<div>
+
+<label>
+
+Département
+
+</label>
+
+<input
+
+type="text"
+
+id="editDepartment"
+
+class="search-input">
+
+</div>
+
+<div>
+
+<label>
+
+Promotion
+
+</label>
+
+<input
+
+type="text"
+
+id="editPromotion"
+
+class="search-input">
+
+</div>
+
+<div>
+
+<label>
+
+Statut
+
+</label>
+
+<select id="editStatus">
+
+<option value="pending">
+
+En attente
+
+</option>
+
+<option value="approved">
+
+Approuvé
+
+</option>
+
+<option value="rejected">
+
+Refusé
+
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="quick-actions">
+
+<button
+
+type="submit"
+
+class="quick-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Enregistrer
+
+</button>
+
+<button
+
+type="reset"
+
+class="quick-btn">
+
+<i class="fa-solid fa-rotate-left"></i>
+
+Réinitialiser
+
+</button>
+
+</div>
+
+</form>
+
+</section>
+<footer class="dashboard-footer">
+
+<p>
+
+<strong>
+
+UTL StudentBus
+
+</strong>
+
+© 2026 - Tous droits réservés.
+
+</p>
+
+<p>
+
+Université Technologique du Lualaba
+
+</p>
+
+</footer>
+
+</main>
+
+</div>
+
+<div
+id="toast"
+class="toast"
+style="display:none;">
+
+</div>
+
+<div
+id="loader"
+class="loader"
+style="display:none;">
+
+<div class="spinner"></div>
+
+<p>
+
+Chargement...
+
+</p>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="../js/firebase-config.js"></script>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/utils.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script src="../js/admin.js"></script>
+
+<script src="../admin/students.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const refreshBtn=document.getElementById("refreshBtn");
+
+    if(refreshBtn){
+
+        refreshBtn.addEventListener("click",()=>{
+
+            if(typeof loadStudents==="function"){
+
+                loadStudents();
+
+            }
+
+        });
+
+    }
+
+    const search=document.getElementById("searchStudent");
+
+    if(search){
+
+        search.addEventListener("input",()=>{
+
+            if(typeof filterStudents==="function"){
+
+                filterStudents();
+
+            }
+
+        });
+
+    }
+
+    const status=document.getElementById("statusFilter");
+
+    if(status){
+
+        status.addEventListener("change",()=>{
+
+            if(typeof filterStudents==="function"){
+
+                filterStudents();
+
+            }
+
+        });
+
+    }
+
+    const faculty=document.getElementById("facultyFilter");
+
+    if(faculty){
+
+        faculty.addEventListener("change",()=>{
+
+            if(typeof filterStudents==="function"){
+
+                filterStudents();
+
+            }
+
+        });
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
